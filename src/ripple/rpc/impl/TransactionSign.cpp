@@ -196,7 +196,7 @@ static Json::Value checkPayment(
 
         if (sendMax.native () && amount.native ())
             return RPC::make_error (rpcINVALID_PARAMS,
-                "Cannot build XRP to XRP paths.");
+                "Cannot build RMC to RMC paths.");
 
         {
             LegacyPathFind lpf (isUnlimited (role), app);
@@ -1138,14 +1138,14 @@ Json::Value transactionSubmitMultiSigned (
             return RPC::make_error (rpcINVALID_PARAMS, err.str ());
         }
 
-        // The Fee field must be in XRP and greater than zero.
+        // The Fee field must be in RMC and greater than zero.
         auto const fee = stpTrans->getFieldAmount (sfFee);
 
         if (!isLegalNet (fee))
         {
             std::ostringstream err;
             err << "Invalid " << sfFee.fieldName
-                << " field.  Fees must be specified in XRP.";
+                << " field.  Fees must be specified in RMC.";
             return RPC::make_error (rpcINVALID_PARAMS, err.str ());
         }
         if (fee <= 0)

@@ -42,14 +42,14 @@ namespace ripple {
 
 /*
     Escrow allows an account holder to sequester any amount
-    of XRP in its own ledger entry, until the escrow process
+    of RMC in its own ledger entry, until the escrow process
     either finishes or is canceled.
 
     If the escrow process finishes successfully, then the
     destination account (which must exist) will receives the
-    sequestered XRP. If the escrow is, instead, canceled,
+    sequestered RMC. If the escrow is, instead, canceled,
     the account which created the escrow will receive the
-    sequestered XRP back instead.
+    sequestered RMC back instead.
 
     EscrowCreate
 
@@ -128,7 +128,7 @@ namespace ripple {
     By careful selection of fields in each transaction,
     these operations may be achieved:
 
-        * Lock up XRP for a time period
+        * Lock up RMC for a time period
         * Execute a payment conditionally
 */
 

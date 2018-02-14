@@ -25,7 +25,6 @@
 #include <ripple/basics/strHex.h>
 #include <ripple/beast/core/ByteOrder.h>
 #include <boost/multiprecision/cpp_int.hpp>
-#include <ed25519-donna/ed25519.h>
 #include <type_traits>
 
 namespace ripple {
@@ -155,30 +154,6 @@ ecdsaCanonicality (Slice const& sig)
     return ECDSACanonicality::fullyCanonical;
 }
 
-static
-bool
-ed25519Canonical (Slice const& sig)
-{
-    if (sig.size() != 64)
-        return false;
-    // Big-endian Order, the Ed25519 subgroup order
-    std::uint8_t const Order[] =
-    {
-        0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x14, 0xDE, 0xF9, 0xDE, 0xA2, 0xF7, 0x9C, 0xD6,
-        0x58, 0x12, 0x63, 0x1A, 0x5C, 0xF5, 0xD3, 0xED,
-    };
-    // Take the second half of signature
-    // and byte-reverse it to big-endian.
-    auto const le = sig.data() + 32;
-    std::uint8_t S[32];
-    std::reverse_copy(le, le + 32, S);
-    // Must be less than Order
-    return std::lexicographical_compare(
-        S, S + 32, Order, Order + 32);
-}
-
 //------------------------------------------------------------------------------
 
 PublicKey::PublicKey (Slice const& slice)
@@ -209,9 +184,6 @@ PublicKey::operator=(
 boost::optional<KeyType>
 publicKeyType (Slice const& slice)
 {
-    if (slice.size() == 33 &&
-            slice[0] == 0xED)
-        return KeyType::ed25519;
     if (slice.size() == 33 &&
         (slice[0] == 0x02 ||
             slice[0] == 0x03))
@@ -286,19 +258,6 @@ verify (PublicKey const& publicKey,
         {
             return verifyDigest (publicKey,
                 sha512Half(m), sig, mustBeFullyCanonical);
-        }
-        else if (*type == KeyType::ed25519)
-        {
-            if (! ed25519Canonical(sig))
-                return false;
-
-            // We internally prefix Ed25519 keys with a 0xED
-            // byte to distinguish them from secp256k1 keys
-            // so when verifying the signature, we need to
-            // first strip that prefix.
-            return ed25519_sign_open(
-                m.data(), m.size(), publicKey.data() + 1,
-                    sig.data()) == 0;
         }
     }
     return false;

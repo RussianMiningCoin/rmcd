@@ -95,7 +95,7 @@ CreateOffer::preflight (PreflightContext const& ctx)
     if (saTakerPays.native () && saTakerGets.native ())
     {
         JLOG(j.debug()) <<
-            "Malformed offer: redundant (XRP for XRP)";
+            "Malformed offer: redundant (RMC for RMC)";
         return temBAD_OFFER;
     }
     if (saTakerPays <= zero || saTakerGets <= zero)
@@ -117,7 +117,7 @@ CreateOffer::preflight (PreflightContext const& ctx)
             "Malformed offer: redundant (IOU for IOU)";
         return temREDUNDANT;
     }
-    // We don't allow a non-native currency to use the currency code XRP.
+    // We don't allow a non-native currency to use the currency code RMC.
     if (badCurrency() == uPaysCurrency || badCurrency() == uGetsCurrency)
     {
         JLOG(j.debug()) <<
@@ -341,7 +341,7 @@ CreateOffer::bridged_cross (
     assert (!isXRP (takerAmount.in) && !isXRP (takerAmount.out));
 
     if (isXRP (takerAmount.in) || isXRP (takerAmount.out))
-        Throw<std::logic_error> ("Bridging with XRP and an endpoint.");
+        Throw<std::logic_error> ("Bridging with RMC and an endpoint.");
 
     OfferStream offers_direct (view, view_cancel,
         Book (taker.issue_in (), taker.issue_out ()),
@@ -610,7 +610,7 @@ CreateOffer::takerCross (
     // If the taker is unfunded before we begin crossing
     // there's nothing to do - just return an error.
     //
-    // We check this in preclaim, but when selling XRP
+    // We check this in preclaim, but when selling RMC
     // charged fees can cause a user's available balance
     // to go to 0 (by causing it to dip below the reserve)
     // so we check this case again.
@@ -647,7 +647,7 @@ CreateOffer::flowCross (
         // If the taker is unfunded before we begin crossing there's nothing
         // to do - just return an error.
         //
-        // We check this in preclaim, but when selling XRP charged fees can
+        // We check this in preclaim, but when selling RMC charged fees can
         // cause a user's available balance to go to 0 (by causing it to dip
         // below the reserve) so we check this case again.
         STAmount const inStartBalance = accountFunds (
@@ -690,8 +690,8 @@ CreateOffer::flowCross (
             sendMax = inStartBalance;
 
         // Always invoke flow() with the default path.  However if neither
-        // of the takerAmount currencies are XRP then we cross through an
-        // additional path with XRP as the intermediate between two books.
+        // of the takerAmount currencies are RMC then we cross through an
+        // additional path with RMC as the intermediate between two books.
         // This second path we have to build ourselves.
         STPathSet paths;
         if (!takerAmount.in.native() & !takerAmount.out.native())

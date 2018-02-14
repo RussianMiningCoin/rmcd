@@ -141,12 +141,6 @@ using sha512_hasher = beast::sha512_hasher;
     message is the public key of the account - which is not
     stored in the account root.
 
-    The same computation is used regardless of the cryptographic
-    scheme implied by the public key. For example, the public key
-    may be an ed25519 public key or a secp256k1 public key. Support
-    for new cryptographic systems may be added, using the same
-    formula for calculating the account identifier.
-
     Meets the requirements of Hasher (in hash_append)
 */
 struct ripesha_hasher

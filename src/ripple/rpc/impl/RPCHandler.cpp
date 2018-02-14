@@ -67,7 +67,7 @@ namespace {
            "result" : {
               "error" : "noNetwork",
               "error_code" : 16,
-              "error_message" : "Not synced to Ripple network.",
+              "error_message" : "Not synced to RMC network.",
               "request" : {
                  "command" : "ledger",
                  "ledger_index" : 10300865
@@ -97,7 +97,7 @@ namespace {
         {
           "error" : "noNetwork",
           "error_code" : 16,
-          "error_message" : "Not synced to Ripple network.",
+          "error_message" : "Not synced to RMC network.",
           "request" : {
              "command" : "ledger",
              "ledger_index" : 10300865

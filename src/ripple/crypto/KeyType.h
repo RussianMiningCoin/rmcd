@@ -30,7 +30,6 @@ enum class KeyType
     unknown = invalid,
 
     secp256k1 = 0,
-    ed25519   = 1,
 };
 
 KeyType keyTypeFromString (std::string const& s);

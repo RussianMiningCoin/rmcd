@@ -27,7 +27,6 @@
 #include <ripple/crypto/csprng.h>
 #include <ripple/beast/crypto/secure_erase.h>
 #include <ripple/beast/utility/rngfill.h>
-#include <ed25519-donna/ed25519.h>
 #include <cstring>
 
 namespace ripple {
@@ -141,13 +140,6 @@ sign (PublicKey const& pk,
         LogicError("sign: invalid type");
     switch(*type)
     {
-    case KeyType::ed25519:
-    {
-        Buffer b(64);
-        ed25519_sign(m.data(), m.size(),
-            sk.data(), pk.data() + 1, b.data());
-        return b;
-    }
     case KeyType::secp256k1:
     {
         sha512_half_hasher h;
@@ -201,15 +193,6 @@ randomSecretKey()
 SecretKey
 generateSecretKey (KeyType type, Seed const& seed)
 {
-    if (type == KeyType::ed25519)
-    {
-        auto key = sha512Half_s(Slice(
-            seed.data(), seed.size()));
-        SecretKey sk = Slice{ key.data(), key.size() };
-        beast::secure_erase(key.data(), key.size());
-        return sk;
-    }
-
     if (type == KeyType::secp256k1)
     {
         // FIXME: Avoid copying the seed into a uint128 key only to have
@@ -255,13 +238,6 @@ derivePublicKey (KeyType type, SecretKey const& sk)
         return PublicKey{Slice{pubkey,
             static_cast<std::size_t>(len)}};
     }
-    case KeyType::ed25519:
-    {
-        unsigned char buf[33];
-        buf[0] = 0xED;
-        ed25519_publickey(sk.data(), &buf[1]);
-        return PublicKey(Slice{ buf, sizeof(buf) });
-    }
     default:
         LogicError("derivePublicKey: bad key type");
     };
@@ -270,20 +246,8 @@ derivePublicKey (KeyType type, SecretKey const& sk)
 std::pair<PublicKey, SecretKey>
 generateKeyPair (KeyType type, Seed const& seed)
 {
-    switch(type)
-    {
-    case KeyType::secp256k1:
-    {
-        Generator g(seed);
-        return g(seed, 0);
-    }
-    default:
-    case KeyType::ed25519:
-    {
-        auto const sk = generateSecretKey(type, seed);
-        return { derivePublicKey(type, sk), sk };
-    }
-    }
+    auto const sk = generateSecretKey(type, seed);
+    return { derivePublicKey(type, sk), sk };
 }
 
 std::pair<PublicKey, SecretKey>

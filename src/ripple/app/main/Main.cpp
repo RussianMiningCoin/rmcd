@@ -40,11 +40,13 @@
 #include <ripple/beast/core/CurrentThreadName.h>
 #include <ripple/beast/utility/Debug.h>
 
+/*
 #include <beast/unit_test/dstream.hpp>
 #include <beast/unit_test/global_suites.hpp>
 #include <beast/unit_test/match.hpp>
 #include <beast/unit_test/reporter.hpp>
 #include <test/unit_test/multi_runner.h>
+*/
 
 #include <google/protobuf/stubs/common.h>
 
@@ -179,79 +181,6 @@ void printHelp (const po::options_description& desc)
            "     wallet_propose [<passphrase>]\n";
 }
 
-//------------------------------------------------------------------------------
-
-static int runUnitTests(
-    std::string const& pattern,
-    std::string const& argument,
-    bool quiet,
-    bool log,
-    bool child,
-    std::size_t num_jobs,
-    int argc,
-    char** argv)
-{
-    using namespace beast::unit_test;
-    using namespace ripple::test;
-
-#if HAS_BOOST_PROCESS
-    if (!child && num_jobs == 1)
-#endif
-    {
-        multi_runner_parent parent_runner;
-
-        multi_runner_child child_runner{num_jobs, quiet, log};
-        auto const any_failed = child_runner.run_multi(match_auto(pattern));
-
-        if (any_failed)
-            return EXIT_FAILURE;
-        return EXIT_SUCCESS;
-    }
-#if HAS_BOOST_PROCESS
-    if (!child)
-    {
-        multi_runner_parent parent_runner;
-        std::vector<boost::process::child> children;
-
-        std::string const exe_name = argv[0];
-        std::vector<std::string> args;
-        {
-            args.reserve(argc);
-            for (int i = 1; i < argc; ++i)
-                args.emplace_back(argv[i]);
-            args.emplace_back("--unittest-child");
-        }
-
-        for (std::size_t i = 0; i < num_jobs; ++i)
-            children.emplace_back(
-                boost::process::exe = exe_name, boost::process::args = args);
-
-        int bad_child_exits = 0;
-        for(auto& c : children)
-        {
-            c.wait();
-            if (c.exit_code())
-                ++bad_child_exits;
-        }
-
-        if (parent_runner.any_failed() || bad_child_exits)
-            return EXIT_FAILURE;
-        return EXIT_SUCCESS;
-    }
-    else
-    {
-        // child
-        multi_runner_child runner{num_jobs, quiet, log};
-        auto const anyFailed = runner.run_multi(match_auto(pattern));
-
-        if (anyFailed)
-            return EXIT_FAILURE;
-        return EXIT_SUCCESS;
-    }
-#endif
-}
-
-//------------------------------------------------------------------------------
 
 int run (int argc, char** argv)
 {
@@ -290,13 +219,6 @@ int run (int argc, char** argv)
     ("rpc_ip", po::value <std::string> (), "Specify the IP address for RPC command. Format: <ip-address>[':'<port-number>]")
     ("rpc_port", po::value <std::uint16_t> (), "Specify the port number for RPC command.")
     ("standalone,a", "Run with no peers.")
-    ("unittest,u", po::value <std::string> ()->implicit_value (""), "Perform unit tests.")
-    ("unittest-arg", po::value <std::string> ()->implicit_value (""), "Supplies argument to unit tests.")
-    ("unittest-log", po::value <std::string> ()->implicit_value (""), "Force unit test log output, even in quiet mode.")
-#if HAS_BOOST_PROCESS
-    ("unittest-jobs", po::value <std::size_t> (), "Number of unittest jobs to run.")
-    ("unittest-child", "For internal use only. Run the process as a unit test child process.")
-#endif
     ("parameters", po::value< vector<string> > (), "Specify comma separated parameters.")
     ("quiet,q", "Reduce diagnotics.")
     ("quorum", po::value <std::size_t> (), "Override the minimum validation quorum.")
@@ -348,46 +270,6 @@ int run (int argc, char** argv)
         std::cout << "rippled version " <<
             BuildInfo::getVersionString () << std::endl;
         return 0;
-    }
-
-    // Run the unit tests if requested.
-    // The unit tests will exit the application with an appropriate return code.
-    //
-    if (vm.count ("unittest"))
-    {
-        std::string argument;
-
-        if (vm.count("unittest-arg"))
-            argument = vm["unittest-arg"].as<std::string>();
-
-        std::size_t numJobs = 1;
-        bool unittestChild = false;
-#if HAS_BOOST_PROCESS
-        if (vm.count("unittest-jobs"))
-            numJobs = std::max(numJobs, vm["unittest-jobs"].as<std::size_t>());
-        unittestChild = bool (vm.count("unittest-child"));
-#endif
-
-        return runUnitTests(
-            vm["unittest"].as<std::string>(), argument,
-            bool (vm.count ("quiet")),
-            bool (vm.count ("unittest-log")),
-            unittestChild,
-            numJobs,
-            argc,
-            argv);
-    }
-    else
-    {
-#if HAS_BOOST_PROCESS
-        if (vm.count("unittest-jobs"))
-        {
-            // unittest jobs only makes sense with `unittest`
-            std::cerr << "rippled: '--unittest-jobs' specified without '--unittest'.\n";
-            std::cerr << "To run the unit tests the '--unittest' option must be present.\n";
-            return 1;
-        }
-#endif
     }
 
     auto config = std::make_unique<Config>();

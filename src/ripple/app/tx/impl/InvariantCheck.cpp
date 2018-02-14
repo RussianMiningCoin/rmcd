@@ -75,7 +75,7 @@ XRPNotCreated::finalize(STTx const& tx, TER /*tec*/, beast::Journal const& j)
     if(-1*fee <= drops_ && drops_ <= 0)
         return true;
 
-    JLOG(j.fatal()) << "Invariant failed: XRP net change was " << drops_ <<
+    JLOG(j.fatal()) << "Invariant failed: RMC net change was " << drops_ <<
         " on a fee of " << fee;
     return false;
 }
@@ -120,7 +120,7 @@ XRPBalanceChecks::finalize(STTx const&, TER, beast::Journal const& j)
 {
     if (bad_)
     {
-        JLOG(j.fatal()) << "Invariant failed: incorrect account XRP balance";
+        JLOG(j.fatal()) << "Invariant failed: incorrect account RMC balance";
         return false;
     }
 
@@ -145,7 +145,7 @@ NoBadOffers::visitEntry(
         if (gets < beast::zero)
             return true;
 
-        // Can't have an XRP to XRP offer:
+        // Can't have an RMC to RMC offer:
         return pays.native() && gets.native();
     };
 
@@ -314,7 +314,7 @@ NoXRPTrustLines::finalize(STTx const&, TER, beast::Journal const& j)
     if (! xrpTrustLine_)
         return true;
 
-    JLOG(j.fatal()) << "Invariant failed: an XRP trust line was created";
+    JLOG(j.fatal()) << "Invariant failed: an RMC trust line was created";
     return false;
 }
 

@@ -101,6 +101,17 @@ toBase58 (TokenType type, SecretKey const& sk)
         type, sk.data(), sk.size());
 }
 
+inline
+std::string
+toWIF(SecretKey const& sk)
+{
+    std::vector<uint8_t> k;
+    k.assign(sk.data(), sk.data() + sk.size());
+    k.push_back(1);
+    return base58EncodeToken(
+        TOKEN_ACCOUNT_WIF, k.data(), k.size());
+}
+
 /** Create a secret key using secure random numbers. */
 SecretKey
 randomSecretKey();

@@ -77,13 +77,13 @@ public:
 #endif
 
 /**
- * @brief Invariant: A transaction must not create XRP and should only destroy
- * XRP, up to the transaction fee.
+ * @brief Invariant: A transaction must not create RMC and should only destroy
+ * RMC, up to the transaction fee.
  *
  * For this check, we start with a signed 64-bit integer set to zero. As we go
  * through the ledger entries, look only at account roots, escrow payments,
- * and payment channels.  Remove from the total any previous XRP values and add
- * to the total any new XRP values. The net balance of a payment channel is
+ * and payment channels.  Remove from the total any previous RMC values and add
+ * to the total any new RMC values. The net balance of a payment channel is
  * computed from two fields (amount and balance) and deletions are ignored
  * for paychan and escrow because the amount fields have not been adjusted for
  * those in the case of deletion.
@@ -132,7 +132,7 @@ public:
 };
 
 /**
- * @brief Invariant: An account XRP balance must be in XRP and take a value
+ * @brief Invariant: An account RMC balance must be in RMC and take a value
                      between 0 and SYSTEM_CURRENCY_START drops, inclusive.
  */
 class XRPBalanceChecks
@@ -174,7 +174,7 @@ public:
 };
 
 /**
- * @brief Invariant: Trust lines using XRP are not allowed.
+ * @brief Invariant: Trust lines using RMC are not allowed.
  */
 class NoXRPTrustLines
 {
@@ -195,7 +195,7 @@ public:
 
 /**
  * @brief Invariant: offers should be for non-negative amounts and must not
- *                   be XRP to XRP.
+ *                   be RMC to RMC.
  */
 class NoBadOffers
 {

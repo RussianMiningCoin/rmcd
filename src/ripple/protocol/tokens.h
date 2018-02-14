@@ -34,6 +34,7 @@ enum TokenType
     TOKEN_ACCOUNT_ID        = 0,
     TOKEN_ACCOUNT_PUBLIC    = 35,
     TOKEN_ACCOUNT_SECRET    = 34,
+    TOKEN_ACCOUNT_WIF       = 128,
     TOKEN_FAMILY_GENERATOR  = 41,
     TOKEN_FAMILY_SEED       = 33
 };
@@ -57,9 +58,9 @@ parseHexOrBase58 (std::string const& s);
 // Facilities for converting Ripple tokens
 // to and from their human readable strings
 
-/*  Base-58 encode a Ripple Token
+/*  Base-58 encode a RMC Token
 
-    Ripple Tokens have a one-byte prefx indicating
+    RMC Tokens have a one-byte prefx indicating
     the type of token, followed by the data for the
     token, and finally a 4-byte checksum.
 

@@ -606,16 +606,16 @@ def config_env(toolchain, variant, env):
         boost_libs = [
             # resist the temptation to alphabetize these. coroutine
             # must come before context.
-            'boost_chrono',
-            'boost_coroutine',
-            'boost_context',
-            'boost_date_time',
-            'boost_filesystem',
-            'boost_program_options',
-            'boost_regex',
-            'boost_system',
-            'boost_thread',
-            'boost_serialization'
+            'boost_chrono-mt',
+            'boost_coroutine-mt',
+            'boost_context-mt',
+            'boost_date_time-mt',
+            'boost_filesystem-mt',
+            'boost_program_options-mt',
+            'boost_regex-mt',
+            'boost_system-mt',
+            'boost_thread-mt',
+            'boost_serialization-mt'
         ]
         env.Append(LIBS=['dl'])
 
@@ -962,24 +962,6 @@ def get_classic_sources(toolchain):
     append_sources(result, *list_sources('src/ripple/rpc', '.cpp'))
     append_sources(result, *list_sources('src/ripple/shamap', '.cpp'))
     append_sources(result, *list_sources('src/ripple/server', '.cpp'))
-    append_sources(result, *list_sources('src/test/app', '.cpp'))
-    append_sources(result, *list_sources('src/test/basics', '.cpp'))
-    append_sources(result, *list_sources('src/test/beast', '.cpp'))
-    append_sources(result, *list_sources('src/test/conditions', '.cpp'))
-    append_sources(result, *list_sources('src/test/consensus', '.cpp'))
-    append_sources(result, *list_sources('src/test/core', '.cpp'))
-    append_sources(result, *list_sources('src/test/json', '.cpp'))
-    append_sources(result, *list_sources('src/test/ledger', '.cpp'))
-    append_sources(result, *list_sources('src/test/overlay', '.cpp'))
-    append_sources(result, *list_sources('src/test/peerfinder', '.cpp'))
-    append_sources(result, *list_sources('src/test/protocol', '.cpp'))
-    append_sources(result, *list_sources('src/test/resource', '.cpp'))
-    append_sources(result, *list_sources('src/test/rpc', '.cpp'))
-    append_sources(result, *list_sources('src/test/server', '.cpp'))
-    append_sources(result, *list_sources('src/test/shamap', '.cpp'))
-    append_sources(result, *list_sources('src/test/jtx', '.cpp'))
-    append_sources(result, *list_sources('src/test/csf', '.cpp'))
-    append_sources(result, *list_sources('src/test/unit_test', '.cpp'))
 
 
     if use_shp(toolchain):
@@ -989,7 +971,7 @@ def get_classic_sources(toolchain):
 
     append_sources(
         result,
-        *(list_sources('src/ripple/nodestore', '.cpp') + list_sources('src/test/nodestore', '.cpp')),
+        *(list_sources('src/ripple/nodestore', '.cpp')),
         CPPPATH=[
             'src/rocksdb2/include',
             'src/snappy/snappy',
@@ -1033,28 +1015,7 @@ def get_unity_sources(toolchain):
         'src/ripple/unity/rpcx1.cpp',
         'src/ripple/unity/rpcx2.cpp',
         'src/ripple/unity/shamap.cpp',
-        'src/ripple/unity/server.cpp',
-        'src/test/unity/app_test_unity1.cpp',
-        'src/test/unity/app_test_unity2.cpp',
-        'src/test/unity/basics_test_unity.cpp',
-        'src/test/unity/beast_test_unity1.cpp',
-        'src/test/unity/beast_test_unity2.cpp',
-    	'src/test/unity/consensus_test_unity.cpp',
-        'src/test/unity/core_test_unity.cpp',
-        'src/test/unity/conditions_test_unity.cpp',
-        'src/test/unity/json_test_unity.cpp',
-        'src/test/unity/ledger_test_unity.cpp',
-        'src/test/unity/overlay_test_unity.cpp',
-        'src/test/unity/peerfinder_test_unity.cpp',
-        'src/test/unity/protocol_test_unity.cpp',
-        'src/test/unity/resource_test_unity.cpp',
-        'src/test/unity/rpc_test_unity.cpp',
-        'src/test/unity/server_test_unity.cpp',
-        'src/test/unity/server_status_test_unity.cpp',
-        'src/test/unity/shamap_test_unity.cpp',
-        'src/test/unity/jtx_unity1.cpp',
-        'src/test/unity/jtx_unity2.cpp',
-        'src/test/unity/csf_unity.cpp'
+        'src/ripple/unity/server.cpp'
     )
 
     if use_shp(toolchain):
@@ -1065,7 +1026,6 @@ def get_unity_sources(toolchain):
     append_sources(
         result,
         'src/ripple/unity/nodestore.cpp',
-        'src/test/unity/nodestore_test_unity.cpp',
         CPPPATH=[
             'src/rocksdb2/include',
             'src/snappy/snappy',

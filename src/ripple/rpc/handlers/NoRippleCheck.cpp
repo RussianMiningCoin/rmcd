@@ -113,12 +113,12 @@ Json::Value doNoRippleCheck (RPC::Context& context)
 
     if (bDefaultRipple & ! roleGateway)
     {
-        problems.append ("You appear to have set your default ripple flag even though you "
+        problems.append ("You appear to have set your default RMC flag even though you "
             "are not a gateway. This is not recommended unless you are experimenting");
     }
     else if (roleGateway & ! bDefaultRipple)
     {
-        problems.append ("You should immediately set your default ripple flag");
+        problems.append ("You should immediately set your default RMC flag");
         if (transactions)
         {
             Json::Value& tx = jvTransactions.append (Json::objectValue);
@@ -143,12 +143,12 @@ Json::Value doNoRippleCheck (RPC::Context& context)
                 bool needFix = false;
                 if (bNoRipple & roleGateway)
                 {
-                    problem = "You should clear the no ripple flag on your ";
+                    problem = "You should clear the no RMC flag on your ";
                     needFix = true;
                 }
                 else if (! roleGateway & ! bNoRipple)
                 {
-                    problem = "You should probably set the no ripple flag on your ";
+                    problem = "You should probably set the no RMC flag on your ";
                     needFix = true;
                 }
                 if (needFix)

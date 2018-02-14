@@ -94,8 +94,8 @@ public:
         add (rpcNO_CLOSED,             "noClosed",          "Closed ledger is unavailable.");
         add (rpcNO_CURRENT,            "noCurrent",         "Current ledger is unavailable.");
         add (rpcNO_EVENTS,             "noEvents",          "Current transport does not support events.");
-        add (rpcNO_NETWORK,            "noNetwork",         "Not synced to Ripple network.");
-        add (rpcNO_PATH,               "noPath",            "Unable to find a ripple path.");
+        add (rpcNO_NETWORK,            "noNetwork",         "Not synced to RMC network.");
+        add (rpcNO_PATH,               "noPath",            "Unable to find a RMC path.");
         add (rpcNO_PERMISSION,         "noPermission",      "You don't have permission for this command.");
         add (rpcNO_PF_REQUEST,         "noPathRequest",     "No pathfinding request in progress.");
         add (rpcPASSWD_CHANGED,        "passwdChanged",     "Wrong key, password changed.");

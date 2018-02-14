@@ -29,7 +29,6 @@
 #include <ripple/rpc/Context.h>
 #include <ripple/rpc/impl/RPCHelpers.h>
 #include <ripple/rpc/handlers/WalletPropose.h>
-#include <ed25519-donna/ed25519.h>
 #include <boost/optional.hpp>
 #include <cmath>
 #include <map>
@@ -104,7 +103,9 @@ Json::Value walletPropose (Json::Value const& params)
         seed = randomSeed ();
     }
 
-    auto const publicKey = generateKeyPair (keyType, *seed).first;
+    auto const keyPair = generateKeyPair (keyType, *seed);
+    auto const publicKey = keyPair.first;
+    auto const secretKey = keyPair.second;
 
     Json::Value obj (Json::objectValue);
 
@@ -119,6 +120,8 @@ Json::Value walletPropose (Json::Value const& params)
     obj[jss::public_key] = toBase58(TOKEN_ACCOUNT_PUBLIC, publicKey);
     obj[jss::key_type] = to_string (keyType);
     obj[jss::public_key_hex] = strHex (publicKey.data(), publicKey.size());
+    obj[jss::secret_key_hex] = strHex (secretKey.data(), secretKey.size());
+    obj[jss::secret_key_wif] = toWIF (secretKey);
 
     // If a passphrase was specified, and it was hashed and used as a seed
     // run a quick entropy check and add an appropriate warning, because

@@ -763,9 +763,9 @@ amountFromString (Issue const& issue, std::string const& amount)
 
     bool negative = (match[1].matched && (match[1] == "-"));
 
-    // Can't specify XRP using fractional representation
+    // Can't specify RMC using fractional representation
     if (isXRP(issue) && match[3].matched)
-        Throw<std::runtime_error> ("XRP must be specified in integral drops.");
+        Throw<std::runtime_error> ("RMC must be specified in integral drops.");
 
     std::uint64_t mantissa;
     int exponent;
@@ -847,12 +847,12 @@ amountFromJson (SField const& name, Json::Value const& v)
     if (native)
     {
         if (v.isObject ())
-            Throw<std::runtime_error> ("XRP may not be specified as an object");
+            Throw<std::runtime_error> ("RMC may not be specified as an object");
         issue = xrpIssue ();
     }
     else
     {
-        // non-XRP
+        // non-RMC
         if (! to_currency (issue.currency, currency.asString ()))
             Throw<std::runtime_error> ("invalid currency");
 

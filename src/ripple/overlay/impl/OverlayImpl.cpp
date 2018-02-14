@@ -491,8 +491,15 @@ OverlayImpl::onPrepare()
     auto bootstrapIps = app_.config().IPS.empty()
         ? app_.config().IPS_FIXED
         : app_.config().IPS;
-    if (bootstrapIps.empty ())
-        bootstrapIps.push_back ("r.ripple.com 51235");
+    if (bootstrapIps.empty ()) {
+        bootstrapIps.push_back ("burnham.rmc.one 41234");
+        bootstrapIps.push_back ("connor.rmc.one 41234");
+        bootstrapIps.push_back ("kirk.rmc.one 41234");
+        bootstrapIps.push_back ("lorca.rmc.one 41234");
+        bootstrapIps.push_back ("maddox.rmc.one 41234");
+        bootstrapIps.push_back ("pike.rmc.one 41234");
+        bootstrapIps.push_back ("spock.rmc.one 41234");
+    }
 
     m_resolver.resolve (bootstrapIps,
         [this](std::string const& name,

@@ -25,16 +25,13 @@ namespace ripple {
 KeyType keyTypeFromString (std::string const& s)
 {
     if (s == "secp256k1")  return KeyType::secp256k1;
-    if (s == "ed25519"  )  return KeyType::ed25519;
 
     return KeyType::invalid;
 }
 
 const char* to_string (KeyType type)
 {
-    return   type == KeyType::secp256k1 ? "secp256k1"
-           : type == KeyType::ed25519   ? "ed25519"
-           :                              "INVALID";
+    return   type == KeyType::secp256k1 ? "secp256k1" : "INVALID";
 }
 
 }

@@ -38,24 +38,21 @@ challenging.
 
 ![Flow - Direct](images/flow1.png)
 
-### XRP as a Bridge Currency
-Ripple can bridge even exotic currency pairs directly through XRP. Similar to
-USD in today’s currency market, XRP allows liquidity providers to focus on
+### RMC as a Bridge Currency
+Ripple can bridge even exotic currency pairs directly through RMC. Similar to
+USD in today’s currency market, RMC allows liquidity providers to focus on
 offering competitive FX rates on fewer pairs and adding depth to order books.
-Unlike USD, trading through XRP does not require bank accounts, service fees,
-counterparty risk, or additional operational costs. By using XRP, liquidity
+Unlike USD, trading through RMC does not require bank accounts, service fees,
+counterparty risk, or additional operational costs. By using RMC, liquidity
 providers can specialize in certain currency corridors, reduce operational
 costs, and ultimately, offer more competitive FX pricing.
 
-![Flow - Bridged over XRP](images/flow2.png)
+![Flow - Bridged over RMC](images/flow2.png)
 
 # rippled - Ripple server
 `rippled` is the reference server implementation of the Ripple
 protocol. To learn more about how to build and run a `rippled`
 server, visit https://ripple.com/build/rippled-setup/
-
-[![travis-ci.org: Build Status](https://travis-ci.org/ripple/rippled.png?branch=develop)](https://travis-ci.org/ripple/rippled)
-[![codecov.io: Code Coverage](https://codecov.io/gh/ripple/rippled/branch/develop/graph/badge.svg)](https://codecov.io/gh/ripple/rippled)
 
 ### License
 `rippled` is open source and permissively licensed under the
