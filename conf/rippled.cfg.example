@@ -1,0 +1,79 @@
+[server]
+port_peer
+port_public
+
+# ssl_key = /etc/ssl/private/your.secret.key
+# ssl_cert = /etc/ssl/certs/your.crt
+
+[port_peer]
+port = 41234
+ip = 0.0.0.0
+protocol = peer
+
+[port_public]
+port = 443
+ip = 0.0.0.0
+admin = 127.0.0.1
+protocol = https,wss
+
+#-------------------------------------------------------------------------------
+
+[node_size]
+huge
+
+# This is primary persistent datastore for rippled.  This includes transaction
+# metadata, account states, and ledger headers.  Helpful information can be
+# found here: https://ripple.com/wiki/NodeBackEnd
+[node_db]
+type=NuDB
+path=/var/opt/rmc/db/NuDB
+online_delete       256 #or higher. Must be greater than or equal to ledger_history
+advisory_delete     0
+# type=RocksDB
+# path=db/rocksdb
+# open_files=2000
+# filter_bits=12
+# cache_mb=256
+# file_size_mb=8
+# file_size_mult=2
+
+[ledger_history]
+full
+
+# This needs to be an absolute directory reference, not a relative one.
+# Modify this value as required.
+[debug_logfile]
+/var/log/rippled/debug.log
+
+[sntp_servers]
+time.windows.com
+time.apple.com
+time.nist.gov
+pool.ntp.org
+
+# Where to find some other servers speaking the Ripple protocol.
+#
+[ips]
+kirk.rmc.one 41234
+forrest.rmc.one 41234
+
+# File containing trusted validator keys or validator list publishers.
+# Unless an absolute path is specified, it will be considered relative to the
+# folder in which the rippled.cfg file is located.
+[validators_file]
+validators.txt
+
+# Ditto.
+[validation_quorum]
+2
+
+# Turn down default logging to save disk space in the long run.
+# Valid values here are trace, debug, info, warning, error, and fatal
+[rpc_startup]
+{ "command": "log_level", "severity": "warning" }
+
+# Defaults to 1 ("yes") so that certificates will be validated. To allow the use
+# of self-signed certificates for development or internal use, set to 0 ("no").
+[ssl_verify]
+0
+
