@@ -562,8 +562,6 @@ getSeedFromRPC(Json::Value const& params, Json::Value& error)
 std::pair<PublicKey, SecretKey>
 keypairForSignature(Json::Value const& params, Json::Value& error)
 {
-    bool const has_key_type  = params.isMember (jss::key_type);
-
     // All of the secret types we allow, but only one at a time.
     // The array should be constexpr, but that makes Visual Studio unhappy.
     static char const* const secretTypes[]
@@ -571,7 +569,9 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         jss::passphrase.c_str(),
         jss::secret.c_str(),
         jss::seed.c_str(),
-        jss::seed_hex.c_str()
+        jss::seed_hex.c_str(),
+        jss::secret_key_hex.c_str(),
+        jss::secret_key_wif.c_str()
     };
 
     // Identify which secret type is in use.
@@ -598,43 +598,56 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
             "Exactly one of the following must be specified: " +
             std::string(jss::passphrase) + ", " +
             std::string(jss::secret) + ", " +
-            std::string(jss::seed) + " or " +
-            std::string(jss::seed_hex));
+            std::string(jss::seed) + ", " +
+            std::string(jss::seed_hex) + ", " +
+            std::string(jss::secret_key_hex) + " or " +
+            std::string(jss::secret_key_wif));
         return { };
     }
 
-    KeyType keyType = KeyType::secp256k1;
-    boost::optional<Seed> seed;
-
-    if (has_key_type)
+    if (secretType == jss::secret_key_hex.c_str())
     {
-        if (! params[jss::key_type].isString())
+        if ( ! params[jss::secret_key_hex].isString() )
         {
             error = RPC::expected_field_error (
-                jss::key_type, "string");
+                jss::secret_key_hex, "string");
             return { };
         }
 
-        keyType = keyTypeFromString (
-            params[jss::key_type].asString());
-
-        if (keyType == KeyType::invalid)
+        const auto secretKey = parseHex<SecretKey> (
+        params[jss::secret_key_hex].asString());
+        if (! secretKey )
         {
-            error = RPC::invalid_field_error(jss::key_type);
+            error = rpcError (rpcBAD_SEED);
             return { };
         }
-
-        if (secretType == jss::secret.c_str())
-        {
-            error = RPC::make_param_error (
-                "The secret field is not allowed if " +
-                std::string(jss::key_type) + " is used.");
-            return { };
-        }
-
-        seed = getSeedFromRPC (params, error);
+        auto publicKey = derivePublicKey(KeyType::secp256k1, *secretKey);
+        return { publicKey, *secretKey };
     }
-    else
+
+    if (secretType == jss::secret_key_wif.c_str())
+    {
+        if ( ! params[jss::secret_key_wif].isString() )
+        {
+            error = RPC::expected_field_error (
+                jss::secret_key_wif, "string");
+            return { };
+        }
+
+        const auto secretKey = parseBase58<SecretKey> (
+        TokenType::TOKEN_ACCOUNT_WIF, params[jss::secret_key_wif].asString());
+        if (! secretKey )
+        {
+            error = rpcError (rpcBAD_SEED);
+            return { };
+        }
+        auto publicKey = derivePublicKey(KeyType::secp256k1, *secretKey);
+        return { publicKey, *secretKey };
+    }
+
+    boost::optional<Seed> seed;
+
+    if (secretType == jss::secret.c_str())
     {
         if (! params[jss::secret].isString())
         {
@@ -644,7 +657,11 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         }
 
         seed = parseGenericSeed (
-            params[jss::secret].asString ());
+        params[jss::secret].asString ());
+    }
+    else
+    {
+        seed = getSeedFromRPC (params, error);
     }
 
     if (!seed)
@@ -658,10 +675,7 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         return { };
     }
 
-    if (keyType != KeyType::secp256k1)
-        LogicError ("keypairForSignature: invalid key type");
-
-    return generateKeyPair (keyType, *seed);
+    return generateKeyPair (KeyType::secp256k1, *seed);
 }
 
 std::pair<RPC::Status, LedgerEntryType>

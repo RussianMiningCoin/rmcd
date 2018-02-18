@@ -152,18 +152,17 @@ std::string
 encodeToken (std::uint8_t type,
     void const* token, std::size_t size, bool btc)
 {
-    char buf[1024];
+    unsigned char buf[1024];
     // expanded token includes type + checksum
     auto const expanded = 1 + size + 4;
     // add scratch, log(256) / log(58), rounded up.
     auto const needed = expanded +
         size * (138 / 100 + 1);
-    std::unique_ptr<
-        char[]> pbuf;
-    char* temp;
+    std::unique_ptr<unsigned char[]> pbuf;
+    unsigned char* temp;
     if (needed > sizeof(buf))
     {
-        pbuf.reset(new char[needed]);
+        pbuf.reset(new unsigned char[needed]);
         temp = pbuf.get();
     }
     else
@@ -203,7 +202,7 @@ base58EncodeTokenBitcoin (std::uint8_t type,
 // Modified from the original
 template <class InverseArray>
 static
-std::string
+std::vector<unsigned char>
 decodeBase58 (std::string const& s,
     InverseArray const& inv)
 {
@@ -242,7 +241,7 @@ decodeBase58 (std::string const& s,
     auto iter = std::find_if(
         b256.begin(), b256.end(),[](unsigned char c)
             { return c != 0; });
-    std::string result;
+    std::vector<unsigned char> result;
     result.reserve (zeroes + (b256.end() - iter));
     result.assign (zeroes, 0x00);
     while (iter != b256.end())
@@ -252,12 +251,12 @@ decodeBase58 (std::string const& s,
 
 /*  Base58 decode a RMC token
 
-    The type and checksum are are checked
+    The type and checksum are checked
     and removed from the returned result.
 */
 template <class InverseArray>
 static
-std::string
+std::vector<unsigned char>
 decodeBase58Token (std::string const& s,
     int type, InverseArray const& inv)
 {
@@ -267,9 +266,9 @@ decodeBase58Token (std::string const& s,
     // Reject zero length tokens
     if (result.size() < 6)
         return {};
-    if (result[0] != type)
+    if (static_cast<int>(result[0]) != type)
         return {};
-    std::array<char, 4> guard;
+    std::array<unsigned char, 4> guard;
     checksum(guard.data(),
         result.data(), result.size() - 4);
     if (std::memcmp(guard.data(),
@@ -298,15 +297,13 @@ public:
         map_.fill(-1);
         int i = 0;
         for(auto const c : digits)
-            map_[static_cast<
-                unsigned char>(c)] = i++;
+            map_[static_cast<unsigned char>(c)] = i++;
     }
 
     int
     operator[](char c) const
     {
-        return map_[static_cast<
-            unsigned char>(c)];
+        return map_[static_cast<unsigned char>(c)];
     }
 };
 
@@ -314,7 +311,7 @@ static InverseAlphabet rippleInverse(rippleAlphabet);
 
 static InverseAlphabet bitcoinInverse(bitcoinAlphabet);
 
-std::string
+std::vector<unsigned char>
 decodeBase58Token(
     std::string const& s, int type)
 {
@@ -322,7 +319,7 @@ decodeBase58Token(
         s, type, rippleInverse);
 }
 
-std::string
+std::vector<unsigned char>
 decodeBase58TokenBitcoin(
     std::string const& s, int type)
 {

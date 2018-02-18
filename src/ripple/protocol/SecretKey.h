@@ -93,6 +93,10 @@ template <>
 boost::optional<SecretKey>
 parseBase58 (TokenType type, std::string const& s);
 
+template<>
+boost::optional<SecretKey>
+parseHex (std::string const& str);
+
 inline
 std::string
 toBase58 (TokenType type, SecretKey const& sk)

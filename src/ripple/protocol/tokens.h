@@ -96,7 +96,7 @@ base58EncodeTokenBitcoin (std::uint8_t type,
     The type and checksum must match or an
     empty string is returned.
 */
-std::string
+std::vector<unsigned char>
 decodeBase58Token(
     std::string const& s, int type);
 
@@ -110,7 +110,7 @@ decodeBase58Token(
     base58 alphabet, so that a better error message
     may be returned.
 */
-std::string
+std::vector<unsigned char>
 decodeBase58TokenBitcoin(
     std::string const& s, int type);
 
