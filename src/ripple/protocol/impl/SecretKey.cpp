@@ -261,13 +261,14 @@ template <>
 boost::optional<SecretKey>
 parseBase58 (TokenType type, std::string const& s)
 {
-    auto const result = decodeBase58Token(s, type);
+    auto result = decodeBase58Token(s, type);
     if (result.empty())
         return boost::none;
-    if (result.size() != 32)
+    if (result.size() != 32 || (type == TOKEN_ACCOUNT_WIF && result.size() != 33))
         return boost::none;
+    if (type == TOKEN_ACCOUNT_WIF)
+        result.pop_back();
     return SecretKey(makeSlice(result));
 }
 
 } // ripple
-
