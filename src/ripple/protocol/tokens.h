@@ -21,6 +21,7 @@
 #define RIPPLE_PROTOCOL_TOKENS_H_INCLUDED
 
 #include <boost/optional.hpp>
+#include <vector>
 #include <cstdint>
 #include <string>
 
