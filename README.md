@@ -39,6 +39,7 @@ git-subtree. See the corresponding README for more details.
 - - -
 
 Copyright © 2017, Ripple Labs. All rights reserved.
+
 Copyright © 2017, Russian Mining Company. All rights reserved.
 
 Portions of this document, including but not limited to the Ripple logo,
