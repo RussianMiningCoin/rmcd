@@ -27,10 +27,10 @@ ISC license. See the LICENSE file for more details.
 
 | Folder  | Contents |
 |---------|----------|
-| ./bin   | Scripts and data files for Ripple integrators. |
 | ./build | Intermediate and final build outputs.          |
 | ./Builds| Platform or IDE-specific project files.        |
-| ./doc   | Documentation and example configuration files. |
+| ./conf  | Example configuration files.                   |
+| ./doc   | Documentation.                                 |
 | ./src   | Source code.                                   |
 
 Some of the directories under `src` are external repositories inlined via
