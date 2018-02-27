@@ -1,3 +1,5 @@
+![RMC](/images/RMC_Logo.svg)
+
 # What is RMC?
 RMC is a network of computers which use the [Ripple consensus algorithm](https://www.youtube.com/watch?v=pj1QVb1vlC0) to atomically settle and record
 transactions on a secure distributed database, the RMC Consensus Ledger
