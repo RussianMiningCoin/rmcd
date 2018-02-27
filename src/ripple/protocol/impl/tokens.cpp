@@ -82,7 +82,7 @@ template <>
 boost::optional<std::vector<unsigned char> >
 parseHex(const std::string &str)
 {
-    if (str.size() & 2 != 0)
+    if ((str.size() & 2) != 0)
         return boost::none;
     return parseHex(str.c_str());
 }
