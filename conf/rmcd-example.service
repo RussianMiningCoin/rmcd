@@ -1,0 +1,10 @@
+[Unit]
+Description=Ripple Peer-to-Peer Network Daemon
+ 
+[Service]
+Type=simple
+User=rmc
+ExecStart=/usr/bin/rmcd --conf=/etc/opt/rmc/rmcd.cfg
+ 
+[Install]
+WantedBy=multi-user.target

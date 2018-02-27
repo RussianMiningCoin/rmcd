@@ -6,7 +6,7 @@
     ----------------------------------------------------------------------------
 
     <none>          Same as 'install'
-    install         Default target and copies it to build/rippled (default)
+    install         Default target and copies it to build/rmcd (default)
 
     all             All available variants
     debug           All available debug variants
@@ -124,7 +124,7 @@ import glob
 import SCons.Action
 
 if (not platform.machine().endswith('64')):
-    print('Warning: Detected {} architecture. Rippled requires a 64-bit OS.'.format(
+    print('Warning: Detected {} architecture. RMC requires a 64-bit OS.'.format(
           platform.machine()));
 
 sys.path.append(os.path.join('src', 'ripple', 'beast', 'site_scons'))
@@ -186,7 +186,7 @@ def check_openssl():
     build_time = 'Mon Apr  7 20:33:19 UTC 2014'
     if parse_time(d) < parse_time(build_time):
         raise Exception('Your openSSL was built on %s; '
-                        'rippled needs a version built on or after %s.'
+                        'rmcd needs a version built on or after %s.'
                         % (line, build_time))
 
 
@@ -1163,13 +1163,6 @@ for tu_style in ['classic', 'unity']:
                 cc_flags = {}
 
             object_builder.add_source_files(
-                'src/ripple/unity/ed25519_donna.c',
-                CPPPATH=[
-                    'src/ed25519-donna',
-                ]
-            )
-
-            object_builder.add_source_files(
                 'src/ripple/unity/rocksdb.cpp',
                 CPPPATH=[
                     'src/rocksdb2',
@@ -1193,7 +1186,7 @@ for tu_style in ['classic', 'unity']:
                 object_builder.add_source_files('src/ripple/unity/beastobjc.mm')
 
             target = env.Program(
-                target=os.path.join(variant_dir, 'rippled'),
+                target=os.path.join(variant_dir, 'rmcd'),
                 source=object_builder.objects
                 )
 
@@ -1231,7 +1224,7 @@ for key, value in aliases.items():
     env.Alias(key, value)
 
 vcxproj = base.VSProject(
-    os.path.join('Builds', 'VisualStudio2015', 'RippleD'),
+    os.path.join('Builds', 'VisualStudio2015', 'RMCD'),
     source = [],
     VSPROJECT_ROOT_DIRS = [
         'build/',
