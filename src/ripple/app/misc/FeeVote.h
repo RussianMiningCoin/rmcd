@@ -43,7 +43,7 @@ public:
         std::uint64_t reference_fee = 1;
 
         /** The cost of a reference transaction in fee units. */
-        std::uint32_t const reference_fee_units = 10;
+        std::uint32_t const reference_fee_units = 1;
 
         /** The account reserve requirement in drops. */
         std::uint64_t account_reserve = 10;
