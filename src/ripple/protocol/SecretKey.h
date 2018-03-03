@@ -47,10 +47,10 @@ public:
     SecretKey (std::array<std::uint8_t, 32> const& data);
     SecretKey (Slice const& slice);
 
-    std::uint8_t const*
+    std::uint8_t *
     data() const
     {
-        return buf_;
+        return const_cast<uint8_t *>(&buf_[0]);
     }
 
     std::size_t
