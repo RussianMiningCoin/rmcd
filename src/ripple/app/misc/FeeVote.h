@@ -40,16 +40,16 @@ public:
     struct Setup
     {
         /** The cost of a reference transaction in drops. */
-        std::uint64_t reference_fee = 10;
+        std::uint64_t reference_fee = 1;
 
         /** The cost of a reference transaction in fee units. */
-        std::uint32_t const reference_fee_units = 10;
+        std::uint32_t const reference_fee_units = 1;
 
         /** The account reserve requirement in drops. */
-        std::uint64_t account_reserve = SYSTEM_CURRENCY_PARTS / 400;
+        std::uint64_t account_reserve = 10;
 
         /** The per-owned item reserve requirement in drops. */
-        std::uint64_t owner_reserve = SYSTEM_CURRENCY_PARTS / 1600;
+        std::uint64_t owner_reserve = 5;
     };
 
     virtual ~FeeVote () = default;
