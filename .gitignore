@@ -24,7 +24,7 @@ bin/project-cache.jam
 build
 tags
 TAGS
-bin/rippled
+bin/rmcd
 Debug/*.*
 Release/*.*
 
@@ -45,7 +45,7 @@ db/*.db-*
 debug_log.txt
 
 # Ignore customized configs
-rippled.cfg
+rmcd.cfg
 validators.txt
 
 # Doxygen generated documentation output
@@ -71,21 +71,16 @@ DerivedData
 *.hmap
 
 # Intel Parallel Studio 2013 XE
-My Amplifier XE Results - RippleD
+My Amplifier XE Results - RMCD
 
 # Compiler intermediate output
 /out.txt
 
 # Build Log
-rippled-build.log
+rmcd-build.log
 
 # Profiling data
 gmon.out
-
-Builds/VisualStudio2015/*.db
-Builds/VisualStudio2015/*.user
-Builds/VisualStudio2015/*.opendb
-Builds/VisualStudio2015/*.sdf
 
 # MSVC
 *.pdb
