@@ -24,14 +24,12 @@ namespace ripple {
 
 void
 sign (STObject& st, HashPrefix const& prefix,
-    KeyType type, SecretKey const& sk,
-    SF_Blob const& sigField)
+    SecretKey const& sk, SF_Blob const& sigField)
 {
     Serializer ss;
     ss.add32(prefix);
     st.addWithoutSigningFields(ss);
-    set(st, sigField,
-        sign(type, sk, ss.slice()));
+    set(st, sigField, sign(sk, ss.slice()));
 }
 
 bool

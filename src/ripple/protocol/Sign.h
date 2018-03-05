@@ -32,7 +32,6 @@ namespace ripple {
 
     @param st Object to sign
     @param prefix Prefix to insert before serialized object when hashing
-    @param type Signing key type used to derive public key
     @param sk Signing secret key
     @param sigField Field in which to store the signature on the object.
     If not specified the value defaults to `sfSignature`.
@@ -41,7 +40,7 @@ namespace ripple {
 */
 void
 sign (STObject& st, HashPrefix const& prefix,
-    KeyType type, SecretKey const& sk,
+    SecretKey const& sk,
         SF_Blob const& sigField = sfSignature);
 
 /** Returns `true` if STObject contains valid signature

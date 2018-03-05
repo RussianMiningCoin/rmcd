@@ -42,7 +42,7 @@ Manifest::make_Manifest (std::string s)
         SerialIter sit (s.data (), s.size ());
         st.set (sit);
         auto const pk = st.getFieldVL (sfPublicKey);
-        if (! publicKeyType (makeSlice(pk)))
+        if (! isPublicKey (makeSlice(pk)))
             return boost::none;
 
         auto const opt_seq = get (st, sfSequence);
@@ -55,7 +55,7 @@ Manifest::make_Manifest (std::string s)
         if (*opt_seq != std::numeric_limits<std::uint32_t>::max ())
         {
             auto const spk = st.getFieldVL (sfSigningPubKey);
-            if (! publicKeyType (makeSlice(spk)))
+            if (! isPublicKey (makeSlice(spk)))
                 return boost::none;
             auto const opt_sig = get (st, sfSignature);
             if (! opt_sig)

@@ -16,9 +16,6 @@
     <Filter Include="beast\unit_test\detail">
       <UniqueIdentifier>{AC49CD8A-C2A7-FBEC-CA36-635A5303E73E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ed25519-donna">
-      <UniqueIdentifier>{9DEED977-2072-A182-5BD9-CEBF206E8C91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lz4">
       <UniqueIdentifier>{B211F8F1-22D2-47BA-C39E-F9846A844D11}</UniqueIdentifier>
     </Filter>
@@ -548,81 +545,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\beast\extras\beast\unit_test\thread.hpp">
       <Filter>beast\unit_test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\curve25519-donna-32bit.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\curve25519-donna-64bit.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\curve25519-donna-helpers.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\curve25519-donna-sse2.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-32bit-sse2.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-32bit-tables.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-64bit-sse2.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-64bit-tables.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-64bit-x86-32bit.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-64bit-x86.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-basepoint-table.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-batchverify.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-impl-base.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-impl-sse2.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-portable-identify.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna-portable.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-donna.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-hash-custom.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-hash.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-randombytes-custom.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519-randombytes.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\src\ed25519-donna\ed25519.c">
-      <Filter>ed25519-donna</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\src\ed25519-donna\ed25519.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\modm-donna-32bit.h">
-      <Filter>ed25519-donna</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ed25519-donna\modm-donna-64bit.h">
-      <Filter>ed25519-donna</Filter>
     </ClInclude>
     <ClCompile Include="..\..\src\lz4\lib\lz4.c">
       <Filter>lz4\lib</Filter>
@@ -3514,9 +3436,6 @@
       <Filter>ripple\unity</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ripple\unity\crypto.cpp">
-      <Filter>ripple\unity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ripple\unity\ed25519_donna.c">
       <Filter>ripple\unity</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ripple\unity\json.cpp">

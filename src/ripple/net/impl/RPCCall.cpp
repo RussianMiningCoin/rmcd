@@ -729,10 +729,7 @@ private:
             if (!pkHex.second)
                 return false;
 
-            if (!publicKeyType(makeSlice(pkHex.first)))
-                return false;
-
-            return true;
+            return isPublicKey(makeSlice(pkHex.first));
         }();
 
         if (!validPublicKey)

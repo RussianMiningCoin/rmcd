@@ -70,9 +70,7 @@ accountFromString(
     if (!seed)
         return rpcError (rpcBAD_SEED);
 
-    auto const keypair = generateKeyPair (
-        KeyType::secp256k1,
-        *seed);
+    auto const keypair = generateKeyPair (*seed);
 
     result = calcAccountID (keypair.first);
     return Json::objectValue;
@@ -621,7 +619,7 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
             error = rpcError (rpcBAD_SEED);
             return { };
         }
-        auto publicKey = derivePublicKey(KeyType::secp256k1, *secretKey);
+        auto publicKey = derivePublicKey(*secretKey);
         return { publicKey, *secretKey };
     }
 
@@ -641,7 +639,7 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
             error = rpcError (rpcBAD_SEED);
             return { };
         }
-        auto publicKey = derivePublicKey(KeyType::secp256k1, *secretKey);
+        auto publicKey = derivePublicKey(*secretKey);
         return { publicKey, *secretKey };
     }
 
@@ -675,7 +673,7 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         return { };
     }
 
-    return generateKeyPair (KeyType::secp256k1, *seed);
+    return generateKeyPair (*seed);
 }
 
 std::pair<RPC::Status, LedgerEntryType>

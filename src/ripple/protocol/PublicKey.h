@@ -21,7 +21,6 @@
 #define RIPPLE_PROTOCOL_PUBLICKEY_H_INCLUDED
 
 #include <ripple/basics/Slice.h>
-#include <ripple/crypto/KeyType.h> // move to protocol/
 #include <ripple/protocol/STExchange.h>
 #include <ripple/protocol/tokens.h>
 #include <ripple/protocol/UintTypes.h>
@@ -61,7 +60,7 @@ public:
     /** Create a public key.
 
         Preconditions:
-            publicKeyType(Slice(data, size)) != boost::none
+            isPublicKey(Slice(data, size)) == true
     */
     explicit
     PublicKey (Slice const& slice);
@@ -199,20 +198,21 @@ enum class ECDSACanonicality
 boost::optional<ECDSACanonicality>
 ecdsaCanonicality (Slice const& sig);
 
-/** Returns the type of public key.
-
-    @return boost::none If the public key does not
-            represent a known type.
-*/
-/** @{ */
-boost::optional<KeyType>
-publicKeyType (Slice const& slice);
+/** Checks the validity of public key */
+inline
+bool
+isPublicKey (Slice const& slice)
+{
+    return (slice.size() == 33 &&
+        (slice[0] == 0x02 ||
+            slice[0] == 0x03));
+}
 
 inline
-boost::optional<KeyType>
-publicKeyType (PublicKey const& publicKey)
+bool
+isPublicKey (PublicKey const& publicKey)
 {
-    return publicKeyType (publicKey.slice());
+    return isPublicKey (publicKey.slice());
 }
 /** @} */
 

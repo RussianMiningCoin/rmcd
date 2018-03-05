@@ -42,10 +42,8 @@ loadNodeIdentity (Application& app)
             Throw<std::runtime_error>(
                 "NodeIdentity: Bad [" SECTION_NODE_SEED "] specified");
 
-        auto secretKey =
-            generateSecretKey (KeyType::secp256k1, *seed);
-        auto publicKey =
-            derivePublicKey (KeyType::secp256k1, secretKey);
+        auto secretKey = generateSecretKey (*seed);
+        auto publicKey = derivePublicKey (secretKey);
 
         return { publicKey, secretKey };
     }
@@ -71,7 +69,7 @@ loadNodeIdentity (Application& app)
                 TOKEN_NODE_PUBLIC, pubKO.value_or(""));
 
             // Only use if the public and secret keys are a pair
-            if (sk && pk && (*pk == derivePublicKey (KeyType::secp256k1, *sk)))
+            if (sk && pk && (*pk == derivePublicKey (*sk)))
             {
                 secretKey = sk;
                 publicKey = pk;
@@ -82,7 +80,7 @@ loadNodeIdentity (Application& app)
     // If a valid identity wasn't found, we randomly generate a new one:
     if (!publicKey || !secretKey)
     {
-        std::tie(publicKey, secretKey) = randomKeyPair(KeyType::secp256k1);
+        std::tie(publicKey, secretKey) = randomKeyPair();
 
         *db << str (boost::format (
             "INSERT INTO NodeIdentity (PublicKey,PrivateKey) VALUES ('%s','%s');")
