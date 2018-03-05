@@ -2,14 +2,12 @@
 
 ## Important
 
-We do not recommend Windows for rippled production use at this time. Currently,
-the Ubuntu platform has received the highest level of quality assurance,
-testing, and support. Additionally, 32-bit Windows versions are not supported.
+32-bit Windows versions are not supported.
 
 ## Prerequisites
 
 To clone the source code repository, create branches for inspection or
-modification, build rippled under Visual Studio, and run the unit tests you will
+modification, build RMCD under Visual Studio, and run the unit tests you will
 need these software components
 
 | Component | Minimum Recommended Version |
@@ -33,7 +31,7 @@ Download](https://www.visualstudio.com/downloads/download-visual-studio-vs)
 page, run the installer, and follow the directions. **You may need to choose the
 `Desktop development with C++` workload to install all necessary C++ features.**
 
-Any version of Visual Studio 2017 may be used to build rippled. The **Visual
+Any version of Visual Studio 2017 may be used to build RMCD. The **Visual
 Studio 2017 Community** edition is available free of charge (see [the product
 page](https://www.visualstudio.com/products/visual-studio-community-vs) for
 licensing details), while paid editions may be used for an initial free-trial
@@ -51,7 +49,7 @@ Windows is mandatory for running the unit tests.
 
 ### Install Google Protocol Buffers Compiler
 
-Building rippled requires **protoc.exe** version 2. Version 3 is not currently
+Building RMCD requires **protoc.exe** version 2. Version 3 is not currently
 supported.. At your option you may build it yourself from the sources in the
 [Google Protocol Buffers](https://github.com/google/protobuf) repository, or you
 may download a
@@ -92,8 +90,8 @@ Redistributables" must first be installed first. If so, download it from the
 [same page](http://slproweb.com/products/Win32OpenSSL.html), again making sure
 to get the correct 32-/64-bit variant.
 
-* NOTE: Since rippled links statically to OpenSSL, it does not matter where the
-  OpenSSL .DLL files are placed, or what version they are. rippled does not use
+* NOTE: Since RMCD links statically to OpenSSL, it does not matter where the
+  OpenSSL .DLL files are placed, or what version they are. RMCD does not use
   or require any external .DLL files to run other than the standard operating
   system ones.
 
@@ -112,7 +110,7 @@ cd C:\lib\boost
 bootstrap
 ```
 
-The rippled application is linked statically to the standard runtimes and
+The RMCD application is linked statically to the standard runtimes and
 external dependencies on Windows, to ensure that the behavior of the executable
 is not affected by changes in outside files. Therefore, it is necessary to build
 the required boost static libraries using this command:
@@ -141,10 +139,10 @@ select the install option to add CMake to your path.
 
 As of this writing, the latest version of CMake for windows is 3.10.2.
 
-## Clone the rippled repository
+## Clone the RMCD repository
 
 If you are familiar with cloning github repositories, just follow your normal
-process and clone `git@github.com:ripple/rippled.git`. Otherwise follow this
+process and clone `git@github.com:RussianMiningCoin/rmcd.git`. Otherwise follow this
 section for instructions.
 
 1. If you don't have a github account, sign up for one at
@@ -153,21 +151,18 @@ section for instructions.
    [generating-ssh-keys](https://help.github.com/articles/generating-ssh-keys).
 
 Open the "Git Bash" shell that was installed with "Git for Windows" in the step
-above. Navigate to the directory where you want to clone rippled (git bash uses
+above. Navigate to the directory where you want to clone RMCD (git bash uses
 `/c` for windows's `C:` and forward slash where windows uses backslash, so
 `C:\Users\joe\projs` would be `/c/Users/joe/projs` in git bash). Now clone the
 repository and optionally switch to the *master* branch. Type the following at
 the bash prompt:
 
 ```powershell
-git clone git@github.com:ripple/rippled.git
-cd rippled
+git clone git@github.com:RussianMiningCoin/rmcd.git
+cd rmcd
 ```
 If you receive an error about not having the "correct access rights" make sure
 you have Github ssh keys, as described above.
-
-For a stable release, choose the `master` branch or one of the tagged releases
-listed on [rippled's GitHub page](https://github.com/ripple/rippled/releases). 
 
 ```
 git checkout master
@@ -193,7 +188,7 @@ cmake](https://blogs.msdn.microsoft.com/vcblog/2016/10/05/cmake-support-in-visua
 To begin, simply:
 
 1. Launch Visual Studio and choose **File | Open | Folder**, navigating to the
-   cloned rippled folder.
+   cloned RMCD folder.
 2. Right-click on `CMakeLists.txt` in the **Solution Explorer - Folder View** to
    generate a `CMakeSettings.json` file. A sample settings file is provided
    [here](/Builds/VisualStudio2017/CMakeSettings-example.json). Customize the 
@@ -203,12 +198,11 @@ To begin, simply:
    **Project Setings** drop-down. This should invoke the built-in CMake project
    generator. If not, you can right-click on the `CMakeLists.txt` file and
    choose **Cache | Generate Cache**.
-5. Select either the `rippled.exe` (unity) or `rippled_classic.exe` (non-unity)
-   option in the **Select Startup Item** drop-down. This will be the target
-   built when you press F7. Alternatively, you can choose a target to build from
-   the top-level **CMake | Build** menu. Note that at this time, there are other
-   targets listed that come from third party visual studio files embedded in the
-   rippled repo, e.g. `datagen.vcxproj`. Please ignore them.
+5. Select either the `rmcd.exe` (unity) option in the **Select Startup Item** drop-down.
+   This will be the target built when you press F7. Alternatively, you can choose 
+   a target to build from the top-level **CMake | Build** menu. Note that at this time, 
+   there are other targets listed that come from third party visual studio files embedded 
+   in the `rmcd` repo, e.g. `datagen.vcxproj`. Please ignore them.
 
 For details on configuring debugging sessions or further customization of CMake,
 please refer to the [CMake tools for VS
@@ -216,11 +210,11 @@ documentation](https://docs.microsoft.com/en-us/cpp/ide/cmake-tools-for-visual-c
 
 If using the provided `CMakeSettings.json` file, the executable will be in
 ```
-.\build\x64-Release\Release\rippled(_classic).exe
+.\build\x64-Release\Release\rmcd.exe
 ```
 or
 ```
-.\build\x64-Debug\Debug\rippled(_classic).exe
+.\build\x64-Debug\Debug\rmcd.exe
 ```
 where these paths are relative to your cloned git repository.
 
@@ -230,7 +224,7 @@ This requires having installed [CMake for
 Windows](README.md#optional-install-cmake-for-windows). We do not recommend
 mixing this method with the integrated CMake method for the same repository
 clone. Assuming you included the cmake executable folder in your path,
-execute the following commands within your `rippled` cloned repository:
+execute the following commands within your `rmcd` cloned repository:
 
 ```
 mkdir build\cmake
@@ -238,26 +232,19 @@ cd build\cmake
 cmake ..\.. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT="C:\lib\boost_1_66_0" -DOPENSSL_ROOT="C:\lib\OpenSSL-Win64"
 ```
 Now launch Visual Studio 2017 and select **File | Open | Project/Solution**.
-Navigate to the `build\cmake` folder created above and select the `rippled.sln`
+Navigate to the `build\cmake` folder created above and select the `rmcd.sln`
 file. You can then choose whether to build the `Debug` or `Release` solution
-configuration. Within the **Solution Explorer**, selected either the `rippled`
-(unity build) project or the `rippled_classic` (non-unity) project, and
+configuration. Within the **Solution Explorer**, selected either the `rmcd`
+(unity build) project, and
 right-click to build.
 
 The executable will be in 
 ```
-.\build\cmake\Release\rippled(_classic).exe
+.\build\cmake\Release\rmcd.exe
 ```
  or
 ````
-.\build\cmake\Debug\rippled(_classic).exe
+.\build\cmake\Debug\rmcd.exe
 ````
 where these paths are relative to your cloned git repository.
-
-# Unit Test (Recommended)
-
-`rippled` builds a set of unit tests into the server executable. To run these
-unit tests after building, pass the `--unittest` option to the compiled
-`rippled` executable. The executable will exit with summary info after running
-the unit tests.
 

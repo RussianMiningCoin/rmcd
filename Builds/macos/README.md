@@ -1,17 +1,11 @@
 # macos Build Instructions
 
-## Important
-
-We don't recommend macos for rippled production use at this time. Currently, the
-Ubuntu platform has received the highest level of quality assurance and
-testing. That said, macos is suitable for many development/test tasks.
-
 ## Prerequisites
 
 You'll need macos 10.8 or later.
 
 To clone the source code repository, create branches for inspection or
-modification, build rippled using clang, and run the system tests you will need
+modification, build rmcd using clang, and run the system tests you will need
 these software components:
 
 * [XCode](https://developer.apple.com/xcode/)
@@ -51,7 +45,7 @@ For more info, see "Step 2: Install Homebrew"
 ### Install Dependencies Using Homebrew
 
 `brew` will generally install the latest stable version of any package, which
-should satisfy the the minimum version requirements for rippled.
+should satisfy the the minimum version requirements for rmcd.
 
 ```
 brew update
@@ -76,40 +70,20 @@ to the root of the extracted directory.
 
 ### Dependencies for Building Source Documentation
 
-Source code documentation is not required for running/debugging rippled. That
+Source code documentation is not required for running/debugging rmcd. That
 said, the documentation contains some helpful information about specific
 components of the application. For more information on how to install and run
 the necessary components, see [this document](../../docs/README.md)
 
 ## Build
 
-### Clone the rippled repository
+### Clone the rmcd repository
 
 From a shell:
 
 ```
-git clone git@github.com:ripple/rippled.git
-cd rippled
-```
-
-For a stable release, choose the `master` branch or one of the tagged releases
-listed on [GitHub](https://github.com/ripple/rippled/releases GitHub). 
-
-```
-git checkout master
-```
-
-or to test the latest release candidate, choose the `release` branch.
-
-```
-git checkout release
-```
-
-If you are doing development work and want the latest set of untested
-features, you can consider using the `develop` branch instead.
-
-```
-git checkout develop
+git clone git@github.com:RussianMiningCoin/rmcd.git
+cd rmcd
 ```
 
 ### Configure Library Paths
@@ -165,7 +139,7 @@ the `-j` parameter in this example tells the build tool to compile several
 files in parallel. This value should be chosen roughly based on the number of
 cores you have available and/or want to use for building.
 
-When the build completes succesfully, you will have a `rippled` executable in
+When the build completes succesfully, you will have a `rmcd` executable in
 the current directory, which can be used to connect to the network (when
 properly configured) or to run unit tests.
 
@@ -196,11 +170,3 @@ can be added to the cmake generation command as needed:
 * `-Djemalloc=ON` to enable jemalloc support for heap checking
 * `-Dsan=thread` to enable the thread sanitizer with clang
 * `-Dsan=address` to enable the address sanitizer with clang
-
-## Unit Tests (Recommended)
-
-`rippled` builds a set of unit tests into the server executable. To run these unit
-tests after building, pass the `--unittest` option to the compiled `rippled`
-executable. The executable will exit with summary info after running the unit tests.
-
-

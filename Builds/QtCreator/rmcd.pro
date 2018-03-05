@@ -76,29 +76,6 @@ SOURCES += \
     ../../src/ripple/types/ripple_types.unity.cpp \
     ../../src/ripple/validators/ripple_validators.unity.cpp
 
-# ---------
-# Old style
-#
-SOURCES += \
-    ../../src/ripple_app/ripple_app.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt1.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt2.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt3.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt4.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt5.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt6.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt7.unity.cpp \
-    ../../src/ripple_app/ripple_app_pt8.unity.cpp \
-    ../../src/ripple_basics/ripple_basics.unity.cpp \
-    ../../src/ripple_core/ripple_core.unity.cpp \
-    ../../src/ripple_data/ripple_data.unity.cpp \
-    ../../src/ripple_hyperleveldb/ripple_hyperleveldb.unity.cpp \
-    ../../src/ripple_leveldb/ripple_leveldb.unity.cpp \
-    ../../src/ripple_net/ripple_net.unity.cpp \
-    ../../src/ripple_overlay/ripple_overlay.unity.cpp \
-    ../../src/ripple_rpc/ripple_rpc.unity.cpp \
-    ../../src/ripple_websocket/ripple_websocket.unity.cpp
-
 LIBS += \
     -lboost_date_time-mt\
     -lboost_filesystem-mt \
