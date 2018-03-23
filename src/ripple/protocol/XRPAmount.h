@@ -28,6 +28,8 @@
 #include <cstdint>
 #include <string>
 #include <type_traits>
+#include <cassert>
+#include <limits>
 
 using beast::zero;
 
@@ -169,7 +171,8 @@ mulRatio (
 inline
 bool isLegalAmount (XRPAmount const& amount)
 {
-    return amount.drops () <= SYSTEM_CURRENCY_START;
+    assert(SYSTEM_CURRENCY_START <= std::numeric_limits<std::int64_t>::max());
+    return amount.drops () <= static_cast<std::int64_t>(SYSTEM_CURRENCY_START);
 }
 
 }
