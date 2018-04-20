@@ -58,31 +58,13 @@ reverse_bytes(T& t)
         std::swap(bytes[i], bytes[sizeof(T)-1-i]);
 }
 
-template <class T>
-/*constexpr*/
-inline
-void
-maybe_reverse_bytes(T& t, std::false_type)
-{
-}
-
-template <class T>
-/*constexpr*/
-inline
-void
-maybe_reverse_bytes(T& t, std::true_type)
-{
-    reverse_bytes(t);
-}
-
 template <class T, class Hasher>
 /*constexpr*/
 inline
 void
 maybe_reverse_bytes(T& t, Hasher&)
 {
-    maybe_reverse_bytes(t, std::integral_constant<bool,
-        Hasher::endian != endian::native>{});
+    if (Hasher::endian != endian::native) reverse_bytes(t);
 }
 
 } // detail
