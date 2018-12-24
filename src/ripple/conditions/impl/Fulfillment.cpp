@@ -73,8 +73,7 @@ Fulfillment::deserialize(
     //     preimageSha256   [0] PreimageFulfillment ,
     //     prefixSha256     [1] PrefixFulfillment,
     //     thresholdSha256  [2] ThresholdFulfillment,
-    //     rsaSha256        [3] RsaSha256Fulfillment,
-    //     ed25519Sha256    [4] Ed25519Sha512Fulfillment
+    //     rsaSha256        [3] RsaSha256Fulfillment
     // }
 
     if (s.empty())
@@ -139,10 +138,6 @@ Fulfillment::deserialize(
         ec = error::unsupported_type;
         return {};
         break;
-
-    case Type::ed25519Sha256:
-        ec = error::unsupported_type;
-        return {};
 
     default:
         ec = error::unknown_type;
