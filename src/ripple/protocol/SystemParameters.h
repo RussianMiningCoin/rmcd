@@ -32,18 +32,14 @@ static inline
 std::string const&
 systemName ()
 {
-    static std::string const name = "ripple";
+    static std::string const name = "rmc";
     return name;
 }
 
-/** Configure the native currency. */
+/** Initial 10757 RMCs for the genesis ledger. */
 static
 std::uint64_t const
-SYSTEM_CURRENCY_GIFT = 1000;
-
-static
-std::uint64_t const
-SYSTEM_CURRENCY_USERS = 100000000;
+SYSTEM_CURRENCY_COINS = 10757000;
 
 /** Number of drops per 1 RMC */
 static
@@ -53,7 +49,7 @@ SYSTEM_CURRENCY_PARTS = 1000000;
 /** Number of drops in the genesis account. */
 static
 std::uint64_t const
-SYSTEM_CURRENCY_START = SYSTEM_CURRENCY_GIFT * SYSTEM_CURRENCY_USERS * SYSTEM_CURRENCY_PARTS;
+SYSTEM_CURRENCY_START = SYSTEM_CURRENCY_COINS * SYSTEM_CURRENCY_PARTS;
 
 /* The currency code for the native currency. */
 static inline
