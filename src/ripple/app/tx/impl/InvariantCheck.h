@@ -102,11 +102,11 @@ public:
 };
 
 /**
- * @brief Invariant: A transaction must not create XRP and should only destroy
- * the XRP fee.
+ * @brief Invariant: A transaction must not create RMC and should only destroy
+ * the RMC fee.
  *
  * We iterate through all account roots, payment channels and escrow entries
- * that were modified and calculate the net change in XRP caused by the
+ * that were modified and calculate the net change in RMC caused by the
  * transactions.
  */
 class XRPNotCreated
@@ -149,11 +149,11 @@ public:
 };
 
 /**
- * @brief Invariant: An account XRP balance must be in XRP and take a value
+ * @brief Invariant: An account RMC balance must be in RMC and take a value
  *                   between 0 and SYSTEM_CURRENCY_START drops, inclusive.
  *
  * We iterate all account roots modified by the transaction and ensure that
- * their XRP balances are reasonable.
+ * their RMC balances are reasonable.
  */
 class XRPBalanceChecks
 {
@@ -193,7 +193,7 @@ public:
 };
 
 /**
- * @brief Invariant: Trust lines using XRP are not allowed.
+ * @brief Invariant: Trust lines using RMC are not allowed.
  *
  * We iterate all the trust lines created by this transaction and ensure
  * that they are against a valid issuer.
@@ -216,10 +216,10 @@ public:
 
 /**
  * @brief Invariant: offers should be for non-negative amounts and must not
- *                   be XRP to XRP.
+ *                   be RMC to RMC.
  *
  * Examine all offers modified by the transaction and ensure that there are
- * no offers which contain negative amounts or which exchange XRP for XRP.
+ * no offers which contain negative amounts or which exchange RMC for RMC.
  */
 class NoBadOffers
 {

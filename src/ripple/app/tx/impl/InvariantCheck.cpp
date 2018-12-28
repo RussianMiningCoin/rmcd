@@ -47,7 +47,7 @@ TransactionFeeCheck::finalize(
     }
 
     // We should never charge a fee that's greater than or equal to the
-    // entire XRP supply.
+    // entire RMC supply.
     if (fee.drops() >= SYSTEM_CURRENCY_START)
     {
         JLOG(j.fatal()) << "Invariant failed: fee paid exceeds system limit: " << fee.drops();
@@ -77,7 +77,7 @@ XRPNotCreated::visitEntry(
 {
     /* We go through all modified ledger entries, looking only at account roots,
      * escrow payments, and payment channels. We remove from the total any
-     * previous XRP values and add to the total any new XRP values. The net
+     * previous RMC values and add to the total any new RMC values. The net
      * balance of a payment channel is computed from two fields (amount and
      * balance) and deletions are ignored for paychan and escrow because the
      * amount fields have not been adjusted for those in the case of deletion.
@@ -129,11 +129,11 @@ XRPNotCreated::finalize(
     beast::Journal const& j)
 {
     // The net change should never be positive, as this would mean that the
-    // transaction created XRP out of thin air. That's not possible.
+    // transaction created RMC out of thin air. That's not possible.
     if (drops_ > 0)
     {
         JLOG(j.fatal()) <<
-            "Invariant failed: XRP net change was positive: " << drops_;
+            "Invariant failed: RMC net change was positive: " << drops_;
         return false;
     }
 
@@ -141,7 +141,7 @@ XRPNotCreated::finalize(
     if (-drops_ != fee.drops())
     {
         JLOG(j.fatal()) <<
-            "Invariant failed: XRP net change of " << drops_ <<
+            "Invariant failed: RMC net change of " << drops_ <<
             " doesn't match fee " << fee.drops();
         return false;
     }
@@ -189,7 +189,7 @@ XRPBalanceChecks::finalize(STTx const&, TER const, XRPAmount const, beast::Journ
 {
     if (bad_)
     {
-        JLOG(j.fatal()) << "Invariant failed: incorrect account XRP balance";
+        JLOG(j.fatal()) << "Invariant failed: incorrect account RMC balance";
         return false;
     }
 
@@ -214,7 +214,7 @@ NoBadOffers::visitEntry(
         if (gets < beast::zero)
             return true;
 
-        // Can't have an XRP to XRP offer:
+        // Can't have an RMC to RMC offer:
         return pays.native() && gets.native();
     };
 
@@ -384,7 +384,7 @@ NoXRPTrustLines::finalize(STTx const&, TER const, XRPAmount const, beast::Journa
     if (! xrpTrustLine_)
         return true;
 
-    JLOG(j.fatal()) << "Invariant failed: an XRP trust line was created";
+    JLOG(j.fatal()) << "Invariant failed: an RMC trust line was created";
     return false;
 }
 
