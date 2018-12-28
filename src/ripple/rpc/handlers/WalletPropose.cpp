@@ -110,7 +110,9 @@ Json::Value walletPropose (Json::Value const& params)
     if (!keyType)
         keyType = KeyType::secp256k1;
 
-    auto const publicKey = generateKeyPair (*keyType, *seed).first;
+    auto const keyPair = generateKeyPair (*keyType, *seed);
+    auto const publicKey = keyPair.first;
+    auto const secretKey = keyPair.second;
 
     Json::Value obj (Json::objectValue);
 
@@ -125,6 +127,8 @@ Json::Value walletPropose (Json::Value const& params)
     obj[jss::public_key] = toBase58(TokenType::AccountPublic, publicKey);
     obj[jss::key_type] = to_string (*keyType);
     obj[jss::public_key_hex] = strHex (publicKey);
+    obj[jss::secret_key_hex] = strHex (secretKey);
+    obj[jss::secret_key_wif] = toWIF (secretKey);
 
     // If a passphrase was specified, and it was hashed and used as a seed
     // run a quick entropy check and add an appropriate warning, because
