@@ -21,7 +21,6 @@
 #define RIPPLE_PROTOCOL_PUBLICKEY_H_INCLUDED
 
 #include <ripple/basics/Slice.h>
-#include <ripple/crypto/KeyType.h> // move to protocol/
 #include <ripple/protocol/STExchange.h>
 #include <ripple/protocol/tokens.h>
 #include <ripple/protocol/UintTypes.h>
