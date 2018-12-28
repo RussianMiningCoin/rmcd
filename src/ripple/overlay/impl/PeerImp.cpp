@@ -1484,12 +1484,12 @@ PeerImp::onMessage (std::shared_ptr <protocol::TMProposeSet> const& m)
     if (set.has_hops() && ! slot_->cluster())
         set.set_hops(set.hops() + 1);
 
-    auto const type = publicKeyType(
+    auto const valid = isPublicKey(
         makeSlice(set.nodepubkey()));
 
     // VFALCO Magic numbers are bad
     // Roll this into a validation function
-    if ((! type) ||
+    if ((! valid) ||
         (set.currenttxhash ().size () != 32) ||
         (set.signature ().size () < 56) ||
         (set.signature ().size () > 128)

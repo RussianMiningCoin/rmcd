@@ -75,7 +75,7 @@ preflight1 (PreflightContext const& ctx)
 
     auto const spk = ctx.tx.getSigningPubKey();
 
-    if (!spk.empty () && !publicKeyType (makeSlice (spk)))
+    if (!spk.empty () && !isPublicKey (makeSlice (spk)))
     {
         JLOG(ctx.j.debug()) << "preflight1: invalid signing key";
         return temBAD_SIGNATURE;
@@ -349,7 +349,7 @@ Transactor::checkSingleSign (PreclaimContext const& ctx)
     // Consistency: Check signature & verify the transaction's signing
     // public key is authorized for signing.
     auto const spk = ctx.tx.getSigningPubKey();
-    if (!publicKeyType (makeSlice (spk)))
+    if (!isPublicKey (makeSlice (spk)))
     {
         JLOG(ctx.j.trace()) <<
             "checkSingleSign: signing public key type is unknown";
@@ -449,7 +449,7 @@ Transactor::checkMultiSign (PreclaimContext const& ctx)
         // public key.
         auto const spk = txSigner.getFieldVL (sfSigningPubKey);
 
-        if (!publicKeyType (makeSlice(spk)))
+        if (!isPublicKey (makeSlice(spk)))
         {
             JLOG(ctx.j.trace()) <<
                 "checkMultiSign: signing public key type is unknown";

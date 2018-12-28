@@ -98,7 +98,7 @@ ValidatorList::load (
 
         auto const ret = strUnHex (key);
 
-        if (! ret.second || ! publicKeyType(makeSlice(ret.first)))
+        if (! ret.second || ! isPublicKey(makeSlice(ret.first)))
         {
             JLOG (j_.error()) <<
                 "Invalid validator list publisher key: " << key;
@@ -230,7 +230,7 @@ ValidatorList::applyList (
             std::pair<Blob, bool> ret (strUnHex (
                 val["validation_public_key"].asString ()));
 
-            if (! ret.second || ! publicKeyType(makeSlice(ret.first)))
+            if (! ret.second || ! isPublicKey(makeSlice(ret.first)))
             {
                 JLOG (j_.error()) <<
                     "Invalid node identity: " <<

@@ -40,7 +40,7 @@ parseBase58 (TokenType type, std::string const& s)
 {
     auto const result = decodeBase58Token(s, type);
     auto const pks = makeSlice(result);
-    if (!publicKeyType(pks))
+    if (!isPublicKey(pks))
         return boost::none;
     return PublicKey(pks);
 }
@@ -154,7 +154,7 @@ ecdsaCanonicality (Slice const& sig)
 
 PublicKey::PublicKey (Slice const& slice)
 {
-    if(! publicKeyType(slice))
+    if(! isPublicKey(slice))
         LogicError("PublicKey::PublicKey invalid type");
     size_ = slice.size();
     std::memcpy(buf_, slice.data(), size_);
@@ -176,25 +176,13 @@ PublicKey::operator=(PublicKey const& other)
 
 //------------------------------------------------------------------------------
 
-boost::optional<KeyType>
-publicKeyType (Slice const& slice)
-{
-    if (slice.size() == 33)
-    {
-        if (slice[0] == 0x02 || slice[0] == 0x03)
-            return KeyType::secp256k1;
-    }
-
-    return boost::none;
-}
-
 bool
 verifyDigest (PublicKey const& publicKey,
     uint256 const& digest,
     Slice const& sig,
     bool mustBeFullyCanonical)
 {
-    if (publicKeyType(publicKey) != KeyType::secp256k1)
+    if (!isPublicKey(publicKey))
         LogicError("sign: secp256k1 required for digest signing");
     auto const canonicality = ecdsaCanonicality(sig);
     if (! canonicality)
@@ -249,13 +237,10 @@ verify (PublicKey const& publicKey,
     Slice const& sig,
     bool mustBeFullyCanonical)
 {
-    if (auto const type = publicKeyType(publicKey))
+    if (isPublicKey(publicKey))
     {
-        if (*type == KeyType::secp256k1)
-        {
-            return verifyDigest (publicKey,
-                sha512Half(m), sig, mustBeFullyCanonical);
-        }
+        return verifyDigest (publicKey,
+            sha512Half(m), sig, mustBeFullyCanonical);
     }
     return false;
 }

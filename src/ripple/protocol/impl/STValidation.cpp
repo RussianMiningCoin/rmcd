@@ -39,7 +39,7 @@ STValidation::STValidation(
     : STObject(getFormat(), sfValidation), mNodeID(nodeID), mSeen(signTime)
 {
     // This is our own public key and it should always be valid.
-    if (!publicKeyType(publicKey))
+    if (!isPublicKey(publicKey))
         LogicError("Invalid validation public key");
     assert(mNodeID.isNonZero());
     setFieldH256(sfLedgerHash, ledgerHash);
@@ -111,7 +111,7 @@ bool STValidation::isValid (uint256 const& signingHash) const
 {
     try
     {
-        if (publicKeyType(getSignerPublic()) != KeyType::secp256k1)
+        if (!isPublicKey(getSignerPublic()))
             return false;
 
         return verifyDigest (getSignerPublic(),

@@ -748,7 +748,7 @@ private:
             if (!pkHex.second)
                 return false;
 
-            if (!publicKeyType(makeSlice(pkHex.first)))
+            if (!isPublicKey(makeSlice(pkHex.first)))
                 return false;
 
             return true;

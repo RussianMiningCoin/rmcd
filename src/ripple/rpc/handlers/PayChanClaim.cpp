@@ -105,8 +105,8 @@ Json::Value doChannelVerify (RPC::Context& context)
             std::pair<Blob, bool> pkHex(strUnHex (strPk));
             if (!pkHex.second)
                 return rpcError(rpcPUBLIC_MALFORMED);
-            auto const pkType = publicKeyType(makeSlice(pkHex.first));
-            if (!pkType)
+            auto const valid = isPublicKey(makeSlice(pkHex.first));
+            if (!valid)
                 return rpcError(rpcPUBLIC_MALFORMED);
             pk.emplace(makeSlice(pkHex.first));
         }
