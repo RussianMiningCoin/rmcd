@@ -13,7 +13,7 @@ if (target)
     "The target option is deprecated and will be removed in a future release")
   parse_target()
 endif ()
-project (rippled)
+project (rmcd)
 
 #[===================================================================[
    convenience variables and sanity checks
@@ -78,7 +78,7 @@ endif ()
 
 if (NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
   message (FATAL_ERROR "Rippled requires a 64 bit target architecture.\n"
-    "The most likely cause of this warning is trying to build rippled with a 32-bit OS.")
+    "The most likely cause of this warning is trying to build rmcd with a 32-bit OS.")
 endif ()
 
 if (APPLE AND NOT HOMEBREW)
@@ -96,9 +96,9 @@ foreach (line_ ${BUILD_INFO})
   endif ()
 endforeach ()
 if (rippled_version)
-  message (STATUS "rippled version: ${rippled_version}")
+  message (STATUS "rmcd version: ${rippled_version}")
 else ()
-  message (FATAL_ERROR "unable to determine rippled version")
+  message (FATAL_ERROR "unable to determine rmcd version")
 endif ()
 
 #[===================================================================[
@@ -359,7 +359,7 @@ if (assert)
 endif ()
 
 #[===================================================================[
-   rippled compile options/settings via an interface library
+   rmcd compile options/settings via an interface library
 #]===================================================================]
 
 add_library (opts INTERFACE)
@@ -423,7 +423,7 @@ if (san)
 endif ()
 
 #[===================================================================[
-   rippled transitive library deps via an interface library
+   rmcd transitive library deps via an interface library
 #]===================================================================]
 
 add_library (ripple_syslibs INTERFACE)
@@ -1598,7 +1598,7 @@ install (
 #  unfortunately unit_test.h above creates this dependency)
 
 #[===================================================================[
-   rippled executable
+   rmcd executable
 #]===================================================================]
 
 #[=========================================================[
@@ -1606,9 +1606,9 @@ install (
    versions of cmake happy. cmake 3.10+ allows
    add_executable with no sources
 #]=========================================================]
-add_executable (rippled src/ripple/app/main/Application.h)
+add_executable (rmcd src/ripple/app/main/Application.h)
 if (unity)
-  target_sources (rippled PRIVATE
+  target_sources (rmcd PRIVATE
     #[===============================[
        unity, main sources
     #]===============================]
@@ -1638,7 +1638,7 @@ if (unity)
     src/ripple/unity/server.cpp
     src/ripple/unity/soci_ripple.cpp)
 else ()
-  target_sources (rippled PRIVATE
+  target_sources (rmcd PRIVATE
     #[===============================[
        nounity, main sources:
          subdir: app
@@ -1949,12 +1949,12 @@ else ()
     src/ripple/shamap/impl/SHAMapSync.cpp
     src/ripple/shamap/impl/SHAMapTreeNode.cpp)
 endif ()
-target_link_libraries (rippled
+target_link_libraries (rmcd
   Ripple::opts
   Ripple::libs
   Ripple::boost
   Ripple::xrpl_core)
-exclude_if_included (rippled)
+exclude_if_included (rmcd)
 
 #[===================================================================[
    install stuff
@@ -1984,8 +1984,8 @@ write_basic_package_version_file (
   COMPATIBILITY SameMajorVersion)
 
 if (is_root_project)
-  install (TARGETS rippled RUNTIME DESTINATION bin)
-  set_target_properties(rippled PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
+  install (TARGETS rmcd RUNTIME DESTINATION bin)
+  set_target_properties(rmcd PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
   install (
     FILES
       ${CMAKE_CURRENT_SOURCE_DIR}/Builds/CMake/RippleConfig.cmake
@@ -2002,101 +2002,9 @@ if (is_root_project)
         message (\"-- Skipping : \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/\${DEST}/\${NEWNAME}\")
       endif ()
     endmacro()
-    copy_if_not_exists(\"${CMAKE_CURRENT_SOURCE_DIR}/cfg/rippled-example.cfg\" etc rippled.cfg)
+    copy_if_not_exists(\"${CMAKE_CURRENT_SOURCE_DIR}/cfg/rmcd-example.cfg\" etc rmcd.cfg)
     copy_if_not_exists(\"${CMAKE_CURRENT_SOURCE_DIR}/cfg/validators-example.txt\" etc validators.txt)
   ")
-endif ()
-
-#[===================================================================[
-   coverage report target
-#]===================================================================]
-
-if (coverage)
-  if (is_clang)
-    if (APPLE)
-      execute_process (COMMAND xcrun -f llvm-profdata
-        OUTPUT_VARIABLE LLVM_PROFDATA
-        OUTPUT_STRIP_TRAILING_WHITESPACE)
-    else ()
-      find_program (LLVM_PROFDATA llvm-profdata)
-    endif ()
-    if (NOT LLVM_PROFDATA)
-      message (WARNING "unable to find llvm-profdata - skipping coverage_report target")
-    endif ()
-
-    if (APPLE)
-      execute_process (COMMAND xcrun -f llvm-cov
-        OUTPUT_VARIABLE LLVM_COV
-        OUTPUT_STRIP_TRAILING_WHITESPACE)
-    else ()
-      find_program (LLVM_COV llvm-cov)
-    endif ()
-    if (NOT LLVM_COV)
-      message (WARNING "unable to find llvm-cov - skipping coverage_report target")
-    endif ()
-
-    set (extract_pattern "")
-    if (coverage_core_only)
-      set (extract_pattern "${CMAKE_SOURCE_DIR}/src/ripple/")
-    endif ()
-
-    if (LLVM_COV AND LLVM_PROFDATA)
-      add_custom_target (coverage_report
-        USES_TERMINAL
-        COMMAND ${CMAKE_COMMAND} -E echo "Generating coverage - results will be in ${CMAKE_BINARY_DIR}/coverage/index.html."
-        COMMAND ${CMAKE_COMMAND} -E echo "Running rippled tests."
-        COMMAND rippled --unittest$<$<BOOL:${coverage_test}>:=${coverage_test}> --quiet --unittest-log
-        COMMAND ${LLVM_PROFDATA}
-          merge -sparse default.profraw -o rip.profdata
-        COMMAND ${LLVM_COV}
-          show -format=html -output-dir=${CMAKE_BINARY_DIR}/coverage
-          -instr-profile=rip.profdata
-          $<TARGET_FILE:rippled> ${extract_pattern}
-        BYPRODUCTS coverage/index.html)
-    endif ()
-  elseif (is_gcc)
-    find_program (LCOV lcov)
-    if (NOT LCOV)
-      message (WARNING "unable to find lcov - skipping coverage_report target")
-    endif ()
-
-    find_program (GENHTML genhtml)
-    if (NOT GENHTML)
-      message (WARNING "unable to find genhtml - skipping coverage_report target")
-    endif ()
-
-    set (extract_pattern "*")
-    if (coverage_core_only)
-      set (extract_pattern "*/src/ripple/*")
-    endif ()
-
-    if (LCOV AND GENHTML)
-      add_custom_target (coverage_report
-        USES_TERMINAL
-        COMMAND ${CMAKE_COMMAND} -E echo "Generating coverage- results will be in ${CMAKE_BINARY_DIR}/coverage/index.html."
-        # create baseline info file
-        COMMAND ${LCOV}
-          --no-external -d "${CMAKE_SOURCE_DIR}" -c -d . -i -o baseline.info
-          | grep -v "ignoring data for external file"
-        # run tests
-        COMMAND ${CMAKE_COMMAND} -E echo "Running rippled tests for coverage report."
-        COMMAND rippled --unittest$<$<BOOL:${coverage_test}>:=${coverage_test}> --quiet --unittest-log
-        # Create test coverage data file
-        COMMAND ${LCOV}
-          --no-external -d "${CMAKE_SOURCE_DIR}" -c -d . -o tests.info
-          | grep -v "ignoring data for external file"
-        # Combine baseline and test coverage data
-        COMMAND ${LCOV}
-          -a baseline.info -a tests.info -o lcov-all.info
-        # extract our files
-        COMMAND ${LCOV}
-          -e lcov-all.info "${extract_pattern}" -o lcov.info
-        # generate HTML report
-        COMMAND ${GENHTML}
-          -o ${CMAKE_BINARY_DIR}/coverage lcov.info
-        BYPRODUCTS coverage/index.html)
-    endif ()
-  endif ()
 endif ()
 
 #[===================================================================[
@@ -2115,7 +2023,7 @@ if (is_multiconfig)
   file(GLOB md_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
     *.md)
   LIST(APPEND all_sources ${md_files})
-  foreach (_target secp256k1 rocksdb pbufs xrpl_core rippled)
+  foreach (_target secp256k1 rocksdb pbufs xrpl_core rmcd)
     get_target_property (_type ${_target} TYPE)
     if(_type STREQUAL "INTERFACE_LIBRARY")
       continue()
@@ -2123,7 +2031,7 @@ if (is_multiconfig)
     get_target_property (_src ${_target} SOURCES)
     list (REMOVE_ITEM all_sources ${_src})
   endforeach ()
-  target_sources (rippled PRIVATE ${all_sources})
+  target_sources (rmcd PRIVATE ${all_sources})
   set_property (
     SOURCE ${all_sources}
     APPEND
@@ -2131,7 +2039,7 @@ if (is_multiconfig)
   if (MSVC)
     set_property(
       DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      PROPERTY VS_STARTUP_PROJECT rippled)
+      PROPERTY VS_STARTUP_PROJECT rmcd)
   endif ()
 
   group_sources(src)

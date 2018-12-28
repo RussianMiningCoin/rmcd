@@ -279,7 +279,7 @@ public:
         return publicKey_;
     }
 
-    /** Return the version of rippled that the peer is running, if reported. */
+    /** Return the version of rmcd that the peer is running, if reported. */
     std::string
     getVersion() const;
 

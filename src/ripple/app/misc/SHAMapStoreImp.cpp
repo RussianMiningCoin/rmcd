@@ -673,7 +673,7 @@ SHAMapStoreImp::clearPrior (LedgerIndex lastRotated)
                Validations with InitialSeq approximately 1080 (exact value
                doesn't matter), and later validated with the matching
                LedgerSeq value.
-            3) rippled participates in ledgers 1091-1100. Validations
+            3) rmcd participates in ledgers 1091-1100. Validations
                 received are created with InitialSeq in that range, and
                 appropriate LedgerSeqs. Maybe some of those ledgers are
                 not accepted, so LedgerSeq stays null.

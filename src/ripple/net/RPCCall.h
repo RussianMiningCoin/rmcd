@@ -55,7 +55,7 @@ void fromNetwork (
     std::function<void (Json::Value const& jvInput)> callbackFuncP = std::function<void (Json::Value const& jvInput)> ());
 }
 
-/** Given a rippled command line, return the corresponding JSON.
+/** Given a rmcd command line, return the corresponding JSON.
 */
 Json::Value
 cmdLineToJSONRPC (std::vector<std::string> const& args, beast::Journal j);

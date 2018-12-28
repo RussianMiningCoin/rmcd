@@ -104,7 +104,7 @@ PeerImp::run()
             &PeerImp::run, shared_from_this()));
     {
         auto s = getVersion();
-        if (boost::starts_with(s, "rippled-"))
+        if (boost::starts_with(s, "rmcd-"))
         {
             s.erase(s.begin(), s.begin() + 8);
             beast::SemanticVersion v;
