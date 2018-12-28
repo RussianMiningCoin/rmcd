@@ -274,5 +274,15 @@ parseBase58 (TokenType type, std::string const& s)
     return SecretKey(makeSlice(result));
 }
 
+template<>
+boost::optional<SecretKey>
+parseHex (std::string const& str)
+{
+    uint256 secret;
+    if (secret.SetHexExact (str))
+        return SecretKey(Slice(secret.data(), secret.size()));
+    return boost::none;
+}
+
 } // ripple
 

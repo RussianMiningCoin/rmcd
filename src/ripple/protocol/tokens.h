@@ -22,6 +22,7 @@
 
 #include <boost/optional.hpp>
 #include <cstdint>
+#include <vector>
 #include <string>
 
 namespace ripple {
