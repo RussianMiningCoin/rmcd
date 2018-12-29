@@ -34,8 +34,19 @@ loadNodeIdentity (Application& app)
     // If a seed is specified in the configuration file use that directly.
     if (app.config().exists(SECTION_NODE_SEED))
     {
-        auto const seed = parseBase58<Seed>(
-            app.config().section(SECTION_NODE_SEED).lines().front());
+        // Convert string to seed.
+        boost::optional<Seed> seed;
+        auto const contents = app.config().section(SECTION_NODE_SEED).lines().front();
+
+        seed = parseBase58<Seed>(contents);
+        if (!seed) {
+            seed = parseGenericSeed (contents);
+        }
+        if (!seed) {
+            uint128 s;
+            if (s.SetHexExact (contents))
+                seed.emplace (Slice(s.data(), s.size()));
+        }
 
         if (!seed)
             Throw<std::runtime_error>(

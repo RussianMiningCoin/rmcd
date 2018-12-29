@@ -69,8 +69,20 @@ ValidatorKeys::ValidatorKeys(Config const& config, beast::Journal j)
     }
     else if (config.exists(SECTION_VALIDATION_SEED))
     {
-        auto const seed = parseBase58<Seed>(
-            config.section(SECTION_VALIDATION_SEED).lines().front());
+        // Convert string to seed.
+        boost::optional<Seed> seed;
+        auto const contents = config.section(SECTION_VALIDATION_SEED).lines().front();
+
+        seed = parseBase58<Seed>(contents);
+        if (!seed) {
+            seed = parseGenericSeed (contents);
+        }
+        if (!seed) {
+            uint128 s;
+            if (s.SetHexExact (contents))
+                seed.emplace (Slice(s.data(), s.size()));
+        }
+
         if (!seed)
         {
             configInvalid_ = true;
