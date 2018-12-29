@@ -63,7 +63,7 @@ systemCurrencyCode ()
 /** The RMC ledger network's earliest allowed sequence */
 static
 std::uint32_t constexpr
-XRP_LEDGER_EARLIEST_SEQ {32570};
+XRP_LEDGER_EARLIEST_SEQ {1};
 
 } // ripple
 

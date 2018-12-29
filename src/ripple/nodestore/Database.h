@@ -280,7 +280,7 @@ private:
     // current read generation
     uint64_t readGen_ {0};
 
-    // The default is 32570 to match the RMC ledger network's earliest
+    // The default is 1 to match the RMC ledger network's earliest
     // allowed sequence. Alternate networks may set this value.
     std::uint32_t earliestSeq_ {XRP_LEDGER_EARLIEST_SEQ};
 
