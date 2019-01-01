@@ -1,0 +1,21 @@
+#
+# Default validators.txt
+#
+# A list of domains to bootstrap a nodes UNLs or for clients to indirectly
+# locate IPs to contact the Ripple network.
+#
+# This file is UTF-8 with Dos, UNIX, or Mac style end of lines.
+# Blank lines and lines starting with a '#' are ignored.
+# All other lines should be hankos or domain names.
+#
+#
+#
+# [validators]
+#
+#   List of the validation public keys of nodes to always accept as validators.
+#
+#   Examples:
+#    59K613NqkuupdmhJCNSZfKGpAyxW1saJfL36FZQbrSTJVnnQLwH7
+#    59N9SwkuxTDens1YiihfHL61L8xivsRhcacv9576jXTC9XqVMsEw
+#    59Jy6JrGQJ5vKqaUBeSGYabPGXqhteGXmibRkaVfx2xHqjgFF5Cx
+#
