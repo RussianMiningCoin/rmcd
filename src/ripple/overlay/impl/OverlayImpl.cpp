@@ -490,7 +490,7 @@ OverlayImpl::onPrepare()
         ? app_.config().IPS_FIXED
         : app_.config().IPS;
     if (bootstrapIps.empty ())
-        bootstrapIps.push_back ("r.ripple.com 51235");
+        bootstrapIps.push_back ("peer.rmc.one 41235");
 
     m_resolver.resolve (bootstrapIps,
         [this](std::string const& name,
