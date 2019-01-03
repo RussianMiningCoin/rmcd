@@ -237,10 +237,10 @@ parseBase58 (TokenType type, std::string const& s)
     auto result = decodeBase58Token(s, type);
     if (result.empty())
         return boost::none;
-    if (result.size() != 32 || (type == TokenType::AccountWif && result.size() != 33))
-        return boost::none;
-    if (type == TokenType::AccountWif)
+    if (result.size() == 33 && type == TokenType::AccountWif)
         result.pop_back();
+    if (result.size() != 32)
+        return boost::none;
     return SecretKey(makeSlice(result));
 }
 
