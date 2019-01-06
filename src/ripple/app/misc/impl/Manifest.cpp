@@ -160,6 +160,14 @@ Blob Manifest::getMasterSignature () const
     return st.getFieldVL (sfMasterSignature);
 }
 
+Json::Value Manifest::getJson() const
+{
+    Json::Value res(Json::objectValue);
+    res[jss::validation_public_key] = strHex(masterKey);
+    res[jss::manifest] = base64_encode(serialized);
+    return res;
+}
+
 ValidatorToken::ValidatorToken(std::string const& m, SecretKey const& valSecret)
     : manifest(m)
     , validationSecret(valSecret)
