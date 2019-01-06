@@ -38,17 +38,17 @@ systemName ()
 
 /** Initial 10757 RMCs for the genesis ledger. */
 static
-std::uint64_t const
+std::int64_t const
 SYSTEM_CURRENCY_COINS = 10757000;
 
 /** Number of drops per 1 RMC */
 static
-std::uint64_t const
+std::int64_t const
 SYSTEM_CURRENCY_PARTS = 1000000;
 
 /** Number of drops in the genesis account. */
 static
-std::uint64_t const
+std::int64_t const
 SYSTEM_CURRENCY_START = SYSTEM_CURRENCY_COINS * SYSTEM_CURRENCY_PARTS;
 
 /* The currency code for the native currency. */
