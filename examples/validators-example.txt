@@ -1,21 +1,37 @@
-#
-# Default validators.txt
-#
-# A list of domains to bootstrap a nodes UNLs or for clients to indirectly
-# locate IPs to contact the Ripple network.
-#
-# This file is UTF-8 with Dos, UNIX, or Mac style end of lines.
-# Blank lines and lines starting with a '#' are ignored.
-# All other lines should be hankos or domain names.
-#
-#
-#
 # [validators]
-#
 #   List of the validation public keys of nodes to always accept as validators.
 #
+#   Manually listing validator keys is not recommended for production networks.
+#   See validator_list_sites and validator_list_keys below.
+#
+# Examples:
+# 59K613NqkuupdmhJCNSZfKGpAyxW1saJfL36FZQbrSTJVnnQLwH7 VL1
+# 59N9SwkuxTDens1YiihfHL61L8xivsRhcacv9576jXTC9XqVMsEw VL2
+# 59Jy6JrGQJ5vKqaUBeSGYabPGXqhteGXmibRkaVfx2xHqjgFF5Cx VL3
+#
+# [validator_list_sites]
+#
+#   List of URIs serving lists of recommended validators.
+#
+#   The latest list of recommended validator sites can be
+#   obtained from https://ripple.com/ripple.txt
+#
 #   Examples:
-#    59K613NqkuupdmhJCNSZfKGpAyxW1saJfL36FZQbrSTJVnnQLwH7
-#    59N9SwkuxTDens1YiihfHL61L8xivsRhcacv9576jXTC9XqVMsEw
-#    59Jy6JrGQJ5vKqaUBeSGYabPGXqhteGXmibRkaVfx2xHqjgFF5Cx
+#    https://vl.rmc.one
+#    http://127.0.0.1:8000
+#    file:///etc/opt/rmc/vl.txt
+#
+# [validator_list_keys]
+#
+#   List of keys belonging to trusted validator list publishers.
+#   Validator lists fetched from configured sites will only be considered
+#   if the list is accompanied by a valid signature from a trusted
+#   publisher key.
+#   Validator list keys should be hex-encoded.
+#
+#   The latest list of recommended validator keys can be
+#   obtained from https://ripple.com/ripple.txt
+#
+#   Examples:
+#    028375FC6D6E9690E232AE3F30764F34D294C36DD053F24CDBDC6A4E6F3686CB22
 #
