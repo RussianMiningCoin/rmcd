@@ -5,16 +5,13 @@
 #   See validator_list_sites and validator_list_keys below.
 #
 # Examples:
-# 59K613NqkuupdmhJCNSZfKGpAyxW1saJfL36FZQbrSTJVnnQLwH7 VL1
-# 59N9SwkuxTDens1YiihfHL61L8xivsRhcacv9576jXTC9XqVMsEw VL2
-# 59Jy6JrGQJ5vKqaUBeSGYabPGXqhteGXmibRkaVfx2xHqjgFF5Cx VL3
+# 59JeYC3j7aYkyrUJ17aagUcbUna3qUDRR2Q3sSDFykwQZZeE7X1a VL1
+# 59LcCm2SjFXaLTF69zhV4C4PNxwj8BHVQu5r2UvVbijEwUq9tv7r VL2
+# 59MpPDcoTRhAygzyEihSeL3bTtCJ4cwU4PVu9KwxDPBVhkmUWkzD VL3
 #
 # [validator_list_sites]
 #
 #   List of URIs serving lists of recommended validators.
-#
-#   The latest list of recommended validator sites can be
-#   obtained from https://ripple.com/ripple.txt
 #
 #   Examples:
 #    https://vl.rmc.one
@@ -28,9 +25,6 @@
 #   if the list is accompanied by a valid signature from a trusted
 #   publisher key.
 #   Validator list keys should be hex-encoded.
-#
-#   The latest list of recommended validator keys can be
-#   obtained from https://ripple.com/ripple.txt
 #
 #   Examples:
 #    028375FC6D6E9690E232AE3F30764F34D294C36DD053F24CDBDC6A4E6F3686CB22
