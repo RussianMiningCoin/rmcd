@@ -1,6 +1,7 @@
 
 cmake_minimum_required (VERSION 3.9.0)
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/Builds/CMake ${CMAKE_MODULE_PATH})
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
 include (CheckCXXCompilerFlag)
 if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.11)
   include (FetchContent)
