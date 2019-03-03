@@ -217,10 +217,18 @@ derivePublicKey (SecretKey const& sk)
 }
 
 std::pair<PublicKey, SecretKey>
-generateKeyPair (Seed const& seed)
+generateKeyPair (Seed const& seed, bool fCompat)
 {
-    Generator g(seed);
-    return g(seed, 0);
+    if (!fCompat)
+    {
+        Generator g(seed);
+        return g(seed, 0);
+    }
+    else
+    {
+        auto const sk = generateSecretKey(seed);
+        return { derivePublicKey(sk), sk };
+    }
 }
 
 std::pair<PublicKey, SecretKey>

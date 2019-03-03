@@ -159,7 +159,7 @@ derivePublicKey (SecretKey const& sk);
     corresponding to ordinal 0 for the generator.
 */
 std::pair<PublicKey, SecretKey>
-generateKeyPair (Seed const& seed);
+generateKeyPair (Seed const& seed, bool fCompat);
 
 /** Create a key pair using secure random numbers. */
 std::pair<PublicKey, SecretKey>

@@ -90,7 +90,9 @@ Json::Value walletPropose (Json::Value const& params)
         }
     }
 
-    auto const keyPair = generateKeyPair (*seed);
+    bool const compat = (params.isMember (jss::passphrase_compat) && params[jss::passphrase_compat].asBool());
+
+    auto const keyPair = generateKeyPair (*seed, compat);
     auto const publicKey = keyPair.first;
     auto const secretKey = keyPair.second;
 

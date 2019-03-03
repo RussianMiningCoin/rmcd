@@ -71,7 +71,7 @@ accountFromString(
     if (!seed)
         return rpcError (rpcBAD_SEED);
 
-    auto const keypair = generateKeyPair (*seed);
+    auto const keypair = generateKeyPair (*seed, false);
 
     result = calcAccountID (keypair.first);
     return Json::objectValue;
@@ -592,6 +592,9 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         jss::secret_key_wif.c_str()
     };
 
+    // Use root key instead of first one or not
+    bool const compat = (params.isMember (jss::passphrase_compat) && params[jss::passphrase_compat].asBool());
+
     // Identify which secret type is in use.
     char const* secretType = nullptr;
     int count = 0;
@@ -693,7 +696,8 @@ keypairForSignature(Json::Value const& params, Json::Value& error)
         return { };
     }
 
-    return generateKeyPair (*seed);
+
+    return generateKeyPair (*seed, compat);
 }
 
 std::pair<RPC::Status, LedgerEntryType>
