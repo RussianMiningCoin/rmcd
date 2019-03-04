@@ -1,4 +1,4 @@
-Key compatibility issues
+**Key compatibility issues**
 
 Version 1.2.0 introduces a significant change into behaviour of the following methods:
 
@@ -54,7 +54,7 @@ Examples:
 This feature is turned off by default:
 
 ```
-root@peer:~# curl -X POST -d '{"method":"wallet_propose","params":[{"passphrase":"HisDivineShadow"}]}' http://127.0.0.1:80/ | jq
+# curl -X POST -d '{"method":"wallet_propose","params":[{"passphrase":"HisDivineShadow"}]}' http://127.0.0.1:80/ | jq
 {
   "result": {
     "account_id": "1Da1f7YnkpDBXLUk63B4dP2NQKik8fMHDZ",
