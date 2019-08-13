@@ -1,6 +1,5 @@
 [server]
 port_peer
-port_local
 port_public
 
 # ssl_key = /etc/ssl/private/your.secret.key
@@ -13,16 +12,11 @@ port = 41235
 ip = 0.0.0.0
 protocol = peer
 
-[port_local]
-port = 80
-ip = 127.0.0.1
+[port_public]
+port = 8080
+ip = 0.0.0.0
 admin = 127.0.0.1
 protocol = http,rpc,ws
-
-[port_public]
-port = 443
-ip = 0.0.0.0
-protocol = https,rpc,wss
 
 #-------------------------------------------------------------------------------
 
@@ -32,6 +26,9 @@ huge
 [node_db]
 type=NuDB
 path=/var/opt/rmc/db/NuDB
+
+[database_path]
+/var/opt/rmc/db
 
 [ledger_history]
 full
@@ -71,4 +68,4 @@ validators.txt
 # Defaults to 1 ("yes") so that certificates will be validated. To allow the use
 # of self-signed certificates for development or internal use, set to 0 ("no").
 [ssl_verify]
-1
+0

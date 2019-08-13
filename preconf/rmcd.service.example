@@ -4,7 +4,8 @@ Description=RMC Peer-to-Peer Network Daemon
 [Service]
 Type=simple
 User=rmc
-ExecStart=/usr/bin/rmcd --conf=/etc/opt/rmc/rmcd.cfg
+Group=rmc
+ExecStart=/usr/bin/rmcd --net --conf=/etc/opt/rmc/rmcd.cfg
 
 [Install]
 WantedBy=multi-user.target

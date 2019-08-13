@@ -1125,7 +1125,7 @@ if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.11)
   FetchContent_Declare(
     nudb_src
     GIT_REPOSITORY https://github.com/vinniefalco/NuDB.git
-    GIT_TAG        1.0.0
+    GIT_TAG        2.0.0
   )
   FetchContent_GetProperties(nudb_src)
   if(NOT nudb_src_POPULATED)
@@ -1136,7 +1136,7 @@ else ()
   ExternalProject_Add (nudb_src
     PREFIX ${nih_cache_path}
     GIT_REPOSITORY https://github.com/vinniefalco/NuDB.git
-    GIT_TAG 1.0.0
+    GIT_TAG 2.0.0
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     TEST_COMMAND ""
